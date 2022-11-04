@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -26,15 +27,6 @@ func ReadFilePerLine(filename string) {
 	}
 }
 
-// lectura por archivo
-func ReadFile(filename string) {
-	file, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(string(file))
-}
-
 // Lista carpeta/archivo
 // valida si es carpeta
 func ReadDirFile(path string) {
@@ -48,13 +40,78 @@ func ReadDirFile(path string) {
 	}
 }
 
+// lectura por archivo
+func ReadFile(filename string) string {
+	file, err := os.ReadFile(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(file)
+}
+
+// extrae dato de propiedades del correo y contenido
+func ExtractData(data string) (props, body string) {
+	dataSplit := strings.Split(data, "X-FileName:")
+
+	//obtiene todas las propiedades iniciales antes de [X-FileName]
+	properties := dataSplit[0]
+	//fmt.Println(properties)
+
+	//obtiene todo el contenido luego de [X-FileName]
+	auxBody := dataSplit[1]
+
+	//obtiene todo el contenido, luego del 1er salto de linea
+	auxBodyContent := strings.SplitN(auxBody, "\n", 2)
+	bodyContent := auxBodyContent[1]
+	//fmt.Println(bodyContent)
+
+	// retorna propiedades y body
+	return properties, bodyContent
+}
+
+// extrae los destinatarios del correo
+// pagina prueba regex: https://regex101.com/
+func extractPropTo(props string) []string {
+	//obtiene contenido entre valores [To:] y [Subject:]
+	pattern := regexp.MustCompile("(To:)((.|\n)*)(Subject:)")
+	matchSubstring := pattern.FindString(props)
+
+	//obtiente 2do grupo de datos
+	//contenido entre los 2 valor declarados anteriormente
+	groupExtract := pattern.ReplaceAllString(matchSubstring, "$2")
+
+	//extrae cada correo
+	mails := strings.Split(groupExtract, ",")
+
+	//quita espacios laterales de cada elemento
+	for i := range mails {
+		mails[i] = strings.TrimSpace(mails[i])
+	}
+
+	return mails
+}
+
 func main() {
-	//pathFile := "./data"
+	pathFile := "./data"
 	//fileName := pathFile + "/allen-p/_sent_mail/3."
+	fileName := pathFile + "/allen-p/_sent_mail/9."
 
 	//prueba de funciones
 	//ReadFilePerLine(fileName)
-	//ReadFile(fileName)
-	ReadDirFile("./data/shively-h/")
+	data := ReadFile(fileName)
+	props, body := ExtractData(data)
+
+	fmt.Println("--> props <--")
+	fmt.Println(props)
+
+	fmt.Println("--> body <--")
+	fmt.Println(body)
+
+	fmt.Println("--> prop: destinatarios <--")
+	to := extractPropTo(props)
+	fmt.Println(to)
+
+	//caso de usuario con archivo suelto en carpeta usuario
+	//ReadDirFile("./data/shively-h/")
 
 }
