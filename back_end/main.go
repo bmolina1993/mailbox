@@ -69,6 +69,31 @@ func ExtractData(data string) (props, body string) {
 	return properties, bodyContent
 }
 
+// extrae fecha de envio
+func extractPropDate(props string) string {
+	pattern := regexp.MustCompile("(Date:)(.*)")
+	matchSubstring := pattern.FindString(props)
+
+	//obtiene contenido despues de [Date:]
+	date := pattern.ReplaceAllString(matchSubstring, "$2")
+	//quita espacios laterales
+	date = strings.TrimSpace(date)
+
+	return date
+}
+
+func extractPropFrom(props string) string {
+	pattern := regexp.MustCompile("(From:)(.*)")
+	matchSubstring := pattern.FindString(props)
+
+	//obtiene contenido despues de [From:]
+	from := pattern.ReplaceAllString(matchSubstring, "$2")
+	//quita espacios laterales
+	from = strings.TrimSpace(from)
+
+	return from
+}
+
 // extrae los destinatarios del correo
 // pagina prueba regex: https://regex101.com/
 func extractPropTo(props string) []string {
@@ -91,6 +116,20 @@ func extractPropTo(props string) []string {
 	return mails
 }
 
+func extractPropSubject(props string) string {
+	pattern := regexp.MustCompile("(Subject:)((.|\n)*)(Cc:|Mime-Version:)")
+	matchSubstring := pattern.FindString(props)
+
+	//obtiene contenido despues de [Subject:]
+	auxData := pattern.ReplaceAllString(matchSubstring, "$2")
+	//si existe [Cc:], obtiene 1er indice para extraer data
+	data := strings.Split(auxData, "Cc:")
+	//quita espacios laterales
+	subject := strings.TrimSpace(data[0])
+
+	return subject
+}
+
 func main() {
 	pathFile := "./data"
 	//fileName := pathFile + "/allen-p/_sent_mail/3."
@@ -106,10 +145,22 @@ func main() {
 
 	fmt.Println("--> body <--")
 	fmt.Println(body)
+	/*
+		fmt.Println("--> prop - [To] <--")
+		to := extractPropTo(props)
+		fmt.Println(to)
 
-	fmt.Println("--> prop: destinatarios <--")
-	to := extractPropTo(props)
-	fmt.Println(to)
+		fmt.Println("--> prop - [Date] <--")
+		date := extractPropDate(props)
+		fmt.Println(date)
+
+		fmt.Println("--> prop - [From] <--")
+		from := extractPropFrom(props)
+		fmt.Println(from)
+	*/
+	fmt.Println("--> prop - [Subject] <--")
+	subject := extractPropSubject(props)
+	fmt.Println(subject)
 
 	//caso de usuario con archivo suelto en carpeta usuario
 	//ReadDirFile("./data/shively-h/")
