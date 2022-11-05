@@ -29,6 +29,7 @@ func ReadFilePerLine(filename string) {
 
 // Lista carpeta/archivo
 // valida si es carpeta
+/*
 func ReadDirFile(path string) {
 	files, err := os.ReadDir(path)
 	if err != nil {
@@ -38,6 +39,22 @@ func ReadDirFile(path string) {
 	for _, item := range files {
 		fmt.Printf("IsDir: %t | Name: %s \n", item.IsDir(), item.Name())
 	}
+}
+*/
+func ReadDirFile(path string) map[string]bool {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// map con nombre archivo
+	// y bool si es carpeta
+	data := make(map[string]bool)
+
+	for _, item := range files {
+		data[item.Name()] = item.IsDir()
+	}
+
+	return data
 }
 
 // lectura por archivo
@@ -146,23 +163,34 @@ func main() {
 	fmt.Println("--> body <--")
 	fmt.Println(body)
 	/*
-		fmt.Println("--> prop - [To] <--")
-		to := extractPropTo(props)
-		fmt.Println(to)
+			fmt.Println("--> prop - [To] <--")
+			to := extractPropTo(props)
+			fmt.Println(to)
 
-		fmt.Println("--> prop - [Date] <--")
-		date := extractPropDate(props)
-		fmt.Println(date)
+			fmt.Println("--> prop - [Date] <--")
+			date := extractPropDate(props)
+			fmt.Println(date)
 
-		fmt.Println("--> prop - [From] <--")
-		from := extractPropFrom(props)
-		fmt.Println(from)
+			fmt.Println("--> prop - [From] <--")
+			from := extractPropFrom(props)
+			fmt.Println(from)
+
+		fmt.Println("--> prop - [Subject] <--")
+		subject := extractPropSubject(props)
+		fmt.Println(subject)
 	*/
-	fmt.Println("--> prop - [Subject] <--")
-	subject := extractPropSubject(props)
-	fmt.Println(subject)
 
+	fmt.Println("--> Carpetas <--")
 	//caso de usuario con archivo suelto en carpeta usuario
-	//ReadDirFile("./data/shively-h/")
+	dirFile := ReadDirFile("./data/shively-h/")
+	fmt.Println(dirFile)
 
+	fmt.Println("--> Recorre archivos <--")
+	// en la 1ra iteracion de usuario,
+	// recorrera cada carpeta
+	for fileName, isDir := range dirFile {
+		if isDir {
+			fmt.Printf("fileName: %s | isDir: %t \n", fileName, isDir)
+		}
+	}
 }
