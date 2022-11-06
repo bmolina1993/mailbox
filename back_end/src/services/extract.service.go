@@ -1,10 +1,7 @@
 package services
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
 	"regexp"
 	"strings"
 )
@@ -90,20 +87,37 @@ func extractPropSubject(props string) string {
 	return subject
 }
 
-// lectura de archivo (linea a linea)
-func ReadFilePerLine(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		//fmt.Println(err.Error())
-		log.Fatal(err.Error())
-	}
+// extra data de cada archivo
+// por carpeta interna de usuarios
+func ExtractDataPerFile(path, folder, userFolder string) {
+	files := ReadDirFile(path)
 
-	//cierra archivo luego de usarlo
-	defer file.Close()
+	fmt.Println("folder:", folder)         //[x]
+	fmt.Println("userFolder:", userFolder) //[x]
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		raw := strings.Split(scanner.Text(), ":")
-		fmt.Println(len(raw))
+	//instanciamos struct mail
+	//dataMail := entity.QueryMail{}
+
+	//recorre cada archivo
+	for fileName, isDir := range files {
+		if !isDir {
+			pathFile := path + "/" + fileName
+			fmt.Println("pathFile:", pathFile)
+			fmt.Println("fileName:", fileName)
+
+			/*
+				dataMail.Index = "userPepe"
+				dataMail.Content = append(dataMail.Content, entity.Properties{
+					Folder:  "carpeta ",
+					Date:    "2022-04-01",
+					From:    "pepe.argento@gmail.com",
+					To:      []string{"moni.argento@gmail.com"},
+					Subject: "asunto prueba ",
+					Body:    "Contenido ",
+				})
+			*/
+
+		}
+
 	}
 }

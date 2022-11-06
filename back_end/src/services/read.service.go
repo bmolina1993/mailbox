@@ -1,8 +1,11 @@
 package services
 
 import (
+	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 // Lista carpeta/archivo
@@ -30,4 +33,22 @@ func ReadFile(filename string) string {
 		log.Fatal(err)
 	}
 	return string(file)
+}
+
+// lectura de archivo (linea a linea)
+func ReadFilePerLine(filename string) {
+	file, err := os.Open(filename)
+	if err != nil {
+		//fmt.Println(err.Error())
+		log.Fatal(err.Error())
+	}
+
+	//cierra archivo luego de usarlo
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		raw := strings.Split(scanner.Text(), ":")
+		fmt.Println(len(raw))
+	}
 }
