@@ -1,8 +1,9 @@
 package main
 
 import (
-	service "back_end/src/services"
 	"fmt"
+
+	service "github.com/bmolina1993/mailbox/src/services"
 )
 
 func main() {
