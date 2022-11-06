@@ -1,41 +1,41 @@
 package main
 
 import (
+	service "back_end/src/services"
 	"fmt"
-
-	"back_end/src/services"
 )
-//service "./src/services"
+
 func main() {
 	pathFile := "./data/"
-	fileName := pathFile + "allen-p/_sent_mail/9."
 
-	//prueba de funciones
-	//ReadFilePerLine(fileName)
-	data := service.ReadFile(fileName)
-	props, body := service.ExtractData(data)
-
-	fmt.Println("--> props <--")
-	fmt.Println(props)
-
-	fmt.Println("--> body <--")
-	fmt.Println(body)
 	/*
-			fmt.Println("--> prop - [To] <--")
-			to := extractPropTo(props)
-			fmt.Println(to)
+		fileName := pathFile + "allen-p/_sent_mail/9."
+		//prueba de funciones
+		//ReadFilePerLine(fileName)
+		data := service.ReadFile(fileName)
+		props, body := service.ExtractData(data)
 
-			fmt.Println("--> prop - [Date] <--")
-			date := extractPropDate(props)
-			fmt.Println(date)
+		fmt.Println("--> props <--")
+		fmt.Println(props)
 
-			fmt.Println("--> prop - [From] <--")
-			from := extractPropFrom(props)
-			fmt.Println(from)
+		fmt.Println("--> body <--")
+		fmt.Println(body)
 
-		fmt.Println("--> prop - [Subject] <--")
-		subject := extractPropSubject(props)
-		fmt.Println(subject)
+				fmt.Println("--> prop - [To] <--")
+				to := extractPropTo(props)
+				fmt.Println(to)
+
+				fmt.Println("--> prop - [Date] <--")
+				date := extractPropDate(props)
+				fmt.Println(date)
+
+				fmt.Println("--> prop - [From] <--")
+				from := extractPropFrom(props)
+				fmt.Println(from)
+
+			fmt.Println("--> prop - [Subject] <--")
+			subject := extractPropSubject(props)
+			fmt.Println(subject)
 	*/
 
 	fmt.Println("--> Carpetas <--")

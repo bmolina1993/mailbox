@@ -1,6 +1,4 @@
-// package main
-// package services
-package service
+package services
 
 import (
 	"log"
