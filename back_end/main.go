@@ -69,6 +69,7 @@ func main() {
 		// TEMPORAL [X]
 		// filtra carpeta
 		for folderToDelete := range dirPerUser {
+			//inbox -> carpetas anidadas | sent_items -> sin carpetas dentro
 			if folderToDelete != "sent_items" {
 				delete(dirPerUser, folderToDelete)
 			}
@@ -85,6 +86,8 @@ func main() {
 				service.ExtractDataPerFile(pathFoldersInsidePerUser, folderName, userFolder)
 
 				//generar bucle condicional, que valide si ya NO hay carpetas que recorrer
+				//funcion debe retornar cantidad de carpetas y lista de carpetas encontradas
+				//si la cantidad >0 seguira ejecutandose la funcion para recorrer los archivos internos
 			}
 		}
 	}
