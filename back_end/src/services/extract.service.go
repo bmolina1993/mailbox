@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	entity "github.com/bmolina1993/mailbox/src/entities"
 )
 
 // extrae dato de propiedades del correo y contenido
@@ -96,28 +98,66 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 	fmt.Println("userFolder:", userFolder) //[x]
 
 	//instanciamos struct mail
-	//dataMail := entity.QueryMail{}
+	dataMail := entity.QueryMail{}
 
 	//recorre cada archivo
 	for fileName, isDir := range files {
 		if !isDir {
 			pathFile := path + "/" + fileName
-			fmt.Println("pathFile:", pathFile)
-			fmt.Println("fileName:", fileName)
+			//fmt.Println("pathFile:", pathFile)
+
+			//extraccion de dato mail
+			auxData := ReadFile(pathFile)
+			//props, body := ExtractData(auxData)
+			props, _ := ExtractData(auxData)
 
 			/*
-				dataMail.Index = "userPepe"
-				dataMail.Content = append(dataMail.Content, entity.Properties{
-					Folder:  "carpeta ",
-					Date:    "2022-04-01",
-					From:    "pepe.argento@gmail.com",
-					To:      []string{"moni.argento@gmail.com"},
-					Subject: "asunto prueba ",
-					Body:    "Contenido ",
-				})
+				fmt.Println("--> props <--")
+				fmt.Println(props)
+
+				fmt.Println("--> body <--")
+				fmt.Println(body)
 			*/
+
+			/*
+				fmt.Println("\n--> prop - [Date] <--")
+				date := extractPropDate(props)
+				fmt.Println(date)
+
+				fmt.Println("--> prop - [From] <--")
+				from := extractPropFrom(props)
+				fmt.Println(from)
+
+				fmt.Println("--> prop - [To] <--")
+				to := extractPropTo(props)
+				fmt.Println(to)
+
+				fmt.Println("--> prop - [Subject] <--")
+				subject := extractPropSubject(props)
+				fmt.Println(subject)
+
+			*/
+
+			date := extractPropDate(props)
+			from := extractPropFrom(props)
+			to := extractPropTo(props)
+			subject := extractPropSubject(props)
+
+			dataMail.Index = userFolder
+			dataMail.Records = append(dataMail.Records, entity.Properties{
+				Folder:  folder,
+				Date:    date,
+				From:    from,
+				To:      to,
+				Subject: subject,
+				Body:    "body",
+			})
 
 		}
 
 	}
+
+	fmt.Println("\n--> full data extracted <--")
+	fmt.Printf("%+v", dataMail)
+
 }

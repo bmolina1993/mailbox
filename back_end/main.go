@@ -82,10 +82,7 @@ func main() {
 			if isDir {
 				//fmt.Printf("folderName: %s | isDir: %t \n", folderName, isDir)
 				pathFoldersInsidePerUser := pathPerUser + "/" + folderName
-				//folder path
-				//user folder
 				service.ExtractDataPerFile(pathFoldersInsidePerUser, folderName, userFolder)
-
 			}
 		}
 	}

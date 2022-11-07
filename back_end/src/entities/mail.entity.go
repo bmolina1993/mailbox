@@ -11,5 +11,5 @@ type Properties struct {
 
 type QueryMail struct {
 	Index   string
-	Content []Properties
+	Records []Properties
 }
