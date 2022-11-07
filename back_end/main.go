@@ -83,6 +83,8 @@ func main() {
 				//fmt.Printf("folderName: %s | isDir: %t \n", folderName, isDir)
 				pathFoldersInsidePerUser := pathPerUser + "/" + folderName
 				service.ExtractDataPerFile(pathFoldersInsidePerUser, folderName, userFolder)
+
+				//generar bucle condicional, que valide si ya NO hay carpetas que recorrer
 			}
 		}
 	}

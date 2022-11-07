@@ -102,41 +102,14 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 
 	//recorre cada archivo
 	for fileName, isDir := range files {
+		//extrae data solo de archivos
 		if !isDir {
-			pathFile := path + "/" + fileName
-			//fmt.Println("pathFile:", pathFile)
+			fullPathFile := path + "/" + fileName
 
 			//extraccion de dato mail
-			auxData := ReadFile(pathFile)
+			auxData := ReadFile(fullPathFile)
 			//props, body := ExtractData(auxData)
 			props, _ := ExtractData(auxData)
-
-			/*
-				fmt.Println("--> props <--")
-				fmt.Println(props)
-
-				fmt.Println("--> body <--")
-				fmt.Println(body)
-			*/
-
-			/*
-				fmt.Println("\n--> prop - [Date] <--")
-				date := extractPropDate(props)
-				fmt.Println(date)
-
-				fmt.Println("--> prop - [From] <--")
-				from := extractPropFrom(props)
-				fmt.Println(from)
-
-				fmt.Println("--> prop - [To] <--")
-				to := extractPropTo(props)
-				fmt.Println(to)
-
-				fmt.Println("--> prop - [Subject] <--")
-				subject := extractPropSubject(props)
-				fmt.Println(subject)
-
-			*/
 
 			date := extractPropDate(props)
 			from := extractPropFrom(props)
