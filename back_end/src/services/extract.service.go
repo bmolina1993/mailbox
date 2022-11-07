@@ -108,8 +108,8 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 
 			//extraccion de dato mail
 			auxData := ReadFile(fullPathFile)
-			//props, body := ExtractData(auxData)
-			props, _ := ExtractData(auxData)
+			props, body := ExtractData(auxData)
+			//props, _ := ExtractData(auxData)
 
 			date := extractPropDate(props)
 			from := extractPropFrom(props)
@@ -123,14 +123,20 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 				From:    from,
 				To:      to,
 				Subject: subject,
-				Body:    "body",
+				Body:    body,
 			})
 
 		}
 
 	}
 
-	fmt.Println("\n--> full data extracted <--")
-	fmt.Printf("%+v", dataMail)
+	/*
+		fmt.Printf("\n--> full data extracted <--\n")
+		fmt.Printf("%+v", dataMail)
+	*/
+
+	//post api para insercion de datos masivo
+	fmt.Printf("\n\n--> post API JSON <--\n")
+	PostApiBulkData(dataMail)
 
 }
