@@ -91,21 +91,28 @@ func extractPropSubject(props string) string {
 
 // extra data de cada archivo
 // por carpeta interna de usuarios
-func ExtractDataPerFile(path, folder, userFolder string) {
+func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]string) {
 	files := ReadDirFile(path)
 
+	fmt.Println("\n *** ExtractDataPerFile ***")
+	fmt.Println("path:", path)             //[x]
 	fmt.Println("folder:", folder)         //[x]
 	fmt.Println("userFolder:", userFolder) //[x]
 
 	//instanciamos struct mail
 	dataMail := entity.QueryMail{}
+	dataFolders := make(map[string]string)
+	var qtyFolders int
+	var qtyFiles int
+	//var folderNameNested string
 
 	//recorre cada archivo
 	for fileName, isDir := range files {
+		fullPathFile := path + "/" + fileName
 		//extrae data solo de archivos
 		if !isDir {
-			fullPathFile := path + "/" + fileName
-
+			//acumula cantidad de archivos por carpeta
+			qtyFiles++
 			//extraccion de dato mail
 			auxData := ReadFile(fullPathFile)
 			props, body := ExtractData(auxData)
@@ -125,9 +132,13 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 				Subject: subject,
 				Body:    body,
 			})
-
+		} else {
+			//si es carpeta, se acumula cantidad encontrada
+			//folderNameNested = fileName
+			qtyFolders++
+			//dataFolders = append(dataFolders, fullPathFile)
+			dataFolders[fullPathFile] = folder + "/" + fileName
 		}
-
 	}
 
 	/*
@@ -135,8 +146,15 @@ func ExtractDataPerFile(path, folder, userFolder string) {
 		fmt.Printf("%+v", dataMail)
 	*/
 
-	//post api para insercion de datos masivo
-	fmt.Printf("\n\n--> post API JSON <--\n")
-	PostApiBulkData(dataMail)
+	/*
+		//post api para insercion de datos masivo
+		fmt.Printf("\n\n--> post API JSON <--\n")
+		PostApiBulkData(dataMail)
+	*/
 
+	fmt.Println("qtyFiles:", qtyFiles)
+	fmt.Println("qtyFolders:", qtyFolders)
+	fmt.Println("dataFolders:", dataFolders)
+
+	return qtyFolders, dataFolders
 }
