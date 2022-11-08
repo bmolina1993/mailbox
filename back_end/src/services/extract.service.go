@@ -134,27 +134,17 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 			})
 		} else {
 			//si es carpeta, se acumula cantidad encontrada
-			//folderNameNested = fileName
 			qtyFolders++
-			//dataFolders = append(dataFolders, fullPathFile)
 			dataFolders[fullPathFile] = folder + "/" + fileName
 		}
 	}
 
-	/*
-		fmt.Printf("\n--> full data extracted <--\n")
-		fmt.Printf("%+v", dataMail)
-	*/
+	fmt.Println("qtyFiles:", qtyFiles)       //[x]
+	fmt.Println("qtyFolders:", qtyFolders)   //[x]
+	fmt.Println("dataFolders:", dataFolders) //[x]
 
-	/*
-		//post api para insercion de datos masivo
-		fmt.Printf("\n\n--> post API JSON <--\n")
-		PostApiBulkData(dataMail)
-	*/
-
-	fmt.Println("qtyFiles:", qtyFiles)
-	fmt.Println("qtyFolders:", qtyFolders)
-	fmt.Println("dataFolders:", dataFolders)
+	//post api para insercion de datos masivo
+	//PostApiBulkData(dataMail)
 
 	return qtyFolders, dataFolders
 }

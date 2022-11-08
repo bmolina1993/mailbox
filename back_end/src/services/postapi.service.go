@@ -19,6 +19,8 @@ func PostApiBulkData(data entity.QueryMail) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//data formato JSON
 	//fmt.Printf("%+v", string(dataJson))
 
 	//post api
@@ -36,7 +38,7 @@ func PostApiBulkData(data entity.QueryMail) {
 	}
 	defer resp.Body.Close()
 
-	log.Println("-->LOG POST API<--")
+	log.Println("--> LOG POST API <--")
 	log.Println("resp.StatusCode:", resp.StatusCode)
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
