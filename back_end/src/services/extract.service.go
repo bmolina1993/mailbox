@@ -144,7 +144,7 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 	fmt.Println("dataFolders:", dataFolders) //[x]
 
 	//post api para insercion de datos masivo
-	//PostApiBulkData(dataMail)
+	PostApiBulkData(dataMail)
 
 	return qtyFolders, dataFolders
 }

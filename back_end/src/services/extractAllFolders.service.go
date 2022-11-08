@@ -4,17 +4,19 @@ import "fmt"
 
 func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
 
-	// TEMPORAL [X]
-	// filtra carpeta
-	for fileToDelete := range dirFile {
-		//motley-m -> 4 niveles | stokley-c -> 6 niveles
-		if fileToDelete != "motley-m" {
-			delete(dirFile, fileToDelete)
+	/*
+		// TEMPORAL [X]
+		// filtra carpeta
+		for fileToDelete := range dirFile {
+			//motley-m -> 4 niveles |  -> 6 niveles
+			if fileToDelete != "stokley-c" {
+				delete(dirFile, fileToDelete)
+			}
 		}
-	}
-	fmt.Println("\n--> filtra Carpeta <--")
-	fmt.Println(dirFile)
-	// TEMPORAL [X]
+		fmt.Println("\n--> filtra Carpeta <--")
+		fmt.Println(dirFile)
+		// TEMPORAL [X]
+	*/
 
 	//accede a carpeta de usuarios
 	for userFolder := range dirFile { // [1/6 niveles]
