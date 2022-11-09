@@ -1,12 +1,14 @@
 package services
 
-import "testing"
+import (
+	"testing"
+)
 
 // valida si en la ruta ingresada
 // se encuentran carpetas o archivos
 func TestReadDirFile(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	qtyPassExpected := 3
 
 	tables := []struct {
 		path   string
@@ -23,10 +25,19 @@ func TestReadDirFile(t *testing.T) {
 			"1.",
 			false,
 		},
+		{
+			"../../data/badeer-r/inboxError",
+			"Error",
+			false,
+		},
 	}
 
 	for _, item := range tables {
-		operation := ReadDirFile(item.path)
+		operation, err := ReadDirFile(item.path)
+
+		if err != nil {
+			qtyPass++
+		}
 
 		for name, isDir := range operation {
 			if name == item.folder && isDir == item.isDir {

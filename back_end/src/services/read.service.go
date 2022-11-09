@@ -10,10 +10,10 @@ import (
 
 // Lista carpeta/archivo
 // valida si es carpeta
-func ReadDirFile(path string) map[string]bool {
+func ReadDirFile(path string) (map[string]bool, error) {
 	files, err := os.ReadDir(path)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 	// map con nombre archivo
 	// y bool si es carpeta
@@ -23,7 +23,7 @@ func ReadDirFile(path string) map[string]bool {
 		data[item.Name()] = item.IsDir()
 	}
 
-	return data
+	return data, err
 }
 
 // lectura por archivo

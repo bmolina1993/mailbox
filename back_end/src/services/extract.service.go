@@ -92,7 +92,7 @@ func extractPropSubject(props string) string {
 // extra data de cada archivo
 // por carpeta interna de usuarios
 func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]string) {
-	files := ReadDirFile(path)
+	files, _ := ReadDirFile(path)
 
 	fmt.Println("\n *** ExtractDataPerFile ***")
 	fmt.Println("path:", path)             //[x]

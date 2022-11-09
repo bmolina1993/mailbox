@@ -11,7 +11,7 @@ func main() {
 	pathFile := "./data/"
 
 	//obtiene lista de carpeta de usuarios
-	dirFile := service.ReadDirFile(pathFile)
+	dirFile, _ := service.ReadDirFile(pathFile)
 	/**/
 	fmt.Println("--> Carpetas de usuarios <--")
 	fmt.Println(dirFile)

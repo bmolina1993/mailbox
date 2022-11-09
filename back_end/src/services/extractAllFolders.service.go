@@ -23,7 +23,7 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
 		// iteracion por usuario,
 		// se omiten archivos por fuera de carpetas
 		pathPerUser := pathFile + userFolder
-		dirPerUser := ReadDirFile(pathPerUser)
+		dirPerUser, _ := ReadDirFile(pathPerUser)
 
 		/*
 			// TEMPORAL [X]
