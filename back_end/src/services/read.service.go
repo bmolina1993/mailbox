@@ -1,19 +1,17 @@
 package services
 
 import (
-	"bufio"
-	"fmt"
-	"log"
 	"os"
-	"strings"
 )
 
 // Lista carpeta/archivo
 // valida si es carpeta
 func ReadDirFile(path string) (map[string]bool, error) {
+	var errMsg error
 	files, err := os.ReadDir(path)
+
 	if err != nil {
-		fmt.Println(err)
+		errMsg = err
 	}
 	// map con nombre archivo
 	// y bool si es carpeta
@@ -23,32 +21,15 @@ func ReadDirFile(path string) (map[string]bool, error) {
 		data[item.Name()] = item.IsDir()
 	}
 
-	return data, err
+	return data, errMsg
 }
 
 // lectura por archivo
-func ReadFile(filename string) string {
+func ReadFile(filename string) (string, error) {
+	var errMsg error
 	file, err := os.ReadFile(filename)
 	if err != nil {
-		log.Fatal(err)
+		errMsg = err
 	}
-	return string(file)
-}
-
-// lectura de archivo (linea a linea)
-func ReadFilePerLine(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		//fmt.Println(err.Error())
-		log.Fatal(err.Error())
-	}
-
-	//cierra archivo luego de usarlo
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		raw := strings.Split(scanner.Text(), ":")
-		fmt.Println(len(raw))
-	}
+	return string(file), errMsg
 }

@@ -114,7 +114,7 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 			//acumula cantidad de archivos por carpeta
 			qtyFiles++
 			//extraccion de dato mail
-			auxData := ReadFile(fullPathFile)
+			auxData, _ := ReadFile(fullPathFile)
 			props, body := ExtractData(auxData)
 			//props, _ := ExtractData(auxData)
 
