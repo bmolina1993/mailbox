@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
 	"net/http"
 )
 
@@ -16,7 +14,6 @@ type GetDocBody struct {
 }
 
 type HitsData struct {
-	//Index string `json:"_index"`
 	Id string `json:"_id"`
 }
 
@@ -25,12 +22,12 @@ type HitsProps struct {
 }
 
 type GetDocProps struct {
-	//Timed_out bool
 	Hits HitsProps
 }
 
-func GetIdsDocuments() GetDocProps {
+func GetIdsDocuments() (GetDocProps, error) {
 	URL_GET := "http://localhost:4080/es/_search"
+	var getDocProps GetDocProps //instanciado
 	AUX_BODY_GET := GetDocBody{
 		Search_type: "matchall",
 		From:        0,
@@ -39,12 +36,12 @@ func GetIdsDocuments() GetDocProps {
 	//parseo struct a json para post api
 	BODY_GET, err := json.Marshal(AUX_BODY_GET)
 	if err != nil {
-		log.Fatal(err)
+		return getDocProps, err
 	}
 
 	req, err := http.NewRequest("POST", URL_GET, bytes.NewBuffer(BODY_GET))
 	if err != nil {
-		log.Fatal(err)
+		return getDocProps, err
 	}
 	req.SetBasicAuth("admin", "Complexpass#123")
 	req.Header.Set("Content-Type", "application/json")
@@ -52,35 +49,35 @@ func GetIdsDocuments() GetDocProps {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return getDocProps, err
 	}
 	defer resp.Body.Close()
 
 	fmt.Println("--> LOG GET DOCUMENTS API <--")
-	fmt.Println("resp.StatusCode:", resp.StatusCode)
-
-	//instanciado
-	var getDocProps GetDocProps
+	fmt.Print("En progreso...")
+	fmt.Println("\nStatusCode:", resp.StatusCode)
 
 	json.NewDecoder(resp.Body).Decode(&getDocProps)
 
 	//fmt.Printf("%+v \n", getDocProps)
-	return getDocProps
+	return getDocProps, nil
 }
 
-func DeleteDocuments(userFolder string) {
+func DeleteDocuments(userFolder string) error {
+	var statusCode int
 	URL_DELETE := "http://localhost:4080/api/" + userFolder + "/_doc/"
-	idDocumetns := GetIdsDocuments()
+	idDocumetns, _ := GetIdsDocuments()
 	listIds := idDocumetns.Hits.Hits
 
 	fmt.Println("\n\n--> LOG DELETE DOCUMENTS API <--")
+	fmt.Print("En progreso...")
 	for _, idDocument := range listIds {
 		Id := idDocument.Id
 		URL_DELETE_ID := URL_DELETE + Id
 
 		req, err := http.NewRequest("DELETE", URL_DELETE_ID, bytes.NewBuffer([]byte{}))
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		req.SetBasicAuth("admin", "Complexpass#123")
 		req.Header.Set("Content-Type", "application/json")
@@ -88,16 +85,24 @@ func DeleteDocuments(userFolder string) {
 
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		defer resp.Body.Close()
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		fmt.Println("\nuserFolder:", userFolder)
-		fmt.Println("StatusCode:", resp.StatusCode)
-		fmt.Println("body:", string(body))
+		statusCode = resp.StatusCode
+		/*
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return err
+			}
+
+
+			fmt.Println("\nuserFolder:", userFolder)
+			fmt.Println("StatusCode:", resp.StatusCode)
+			fmt.Println("body:", string(body))
+		*/
 	}
+	fmt.Println("\nStatusCode:", statusCode)
+
+	return nil
 }

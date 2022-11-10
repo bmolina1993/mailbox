@@ -3,6 +3,8 @@ package services
 import (
 	"reflect"
 	"testing"
+
+	entity "github.com/bmolina1993/mailbox/src/entities"
 )
 
 // valida si en la ruta ingresada
@@ -325,6 +327,48 @@ func TestExtractAllFolders(t *testing.T) {
 			qtyPass++
 		}
 
+	}
+
+	if qtyPass != qtyPassExpected {
+		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
+	}
+}
+
+func TestPostApiBulkData(t *testing.T) {
+	var qtyPass int
+	qtyPassExpected := 1
+
+	err := PostApiBulkData(entity.QueryMail{Index: "testing", Records: []entity.Properties{}})
+	if err == nil {
+		qtyPass++
+	}
+
+	if qtyPass != qtyPassExpected {
+		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
+	}
+}
+
+func TestGetIdsDocuments(t *testing.T) {
+	var qtyPass int
+	qtyPassExpected := 1
+
+	_, err := GetIdsDocuments()
+	if err == nil {
+		qtyPass++
+	}
+
+	if qtyPass != qtyPassExpected {
+		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
+	}
+}
+
+func TestDeleteDocuments(t *testing.T) {
+	var qtyPass int
+	qtyPassExpected := 1
+
+	err := DeleteDocuments("stokley-c")
+	if err == nil {
+		qtyPass++
 	}
 
 	if qtyPass != qtyPassExpected {
