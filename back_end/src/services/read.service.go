@@ -6,12 +6,12 @@ import (
 
 // Lista carpeta/archivo
 // valida si es carpeta
-func ReadDirFile(path string) (map[string]bool, string) {
-	var errMsg string
+func ReadDirFile(path string) (map[string]bool, error) {
+
 	files, err := os.ReadDir(path)
 
 	if err != nil {
-		errMsg = err.Error()
+		return map[string]bool{}, err
 	}
 	// map con nombre archivo
 	// y bool si es carpeta
@@ -21,15 +21,15 @@ func ReadDirFile(path string) (map[string]bool, string) {
 		data[item.Name()] = item.IsDir()
 	}
 
-	return data, errMsg
+	return data, nil
 }
 
 // lectura por archivo
 func ReadFile(filename string) (string, error) {
-	var errMsg error
 	file, err := os.ReadFile(filename)
 	if err != nil {
-		errMsg = err
+		return "", err
 	}
-	return string(file), errMsg
+
+	return string(file), nil
 }

@@ -1,10 +1,7 @@
 package services
 
 import (
-	"reflect"
 	"testing"
-
-	entity "github.com/bmolina1993/mailbox/src/entities"
 )
 
 // valida si en la ruta ingresada
@@ -19,17 +16,17 @@ func TestReadDirFile(t *testing.T) {
 		isDir  bool
 	}{
 		{
-			"../../data",
+			"../../data/",
 			"allen-p",
 			true,
 		},
 		{
-			"../../data/badeer-r/inbox",
+			"../../data/badeer-r/inbox/",
 			"1.",
 			false,
 		},
 		{
-			"../../data/badeer-r/inboxError",
+			"../../data/badeer-r/inboxError/",
 			"Error",
 			false,
 		},
@@ -38,7 +35,7 @@ func TestReadDirFile(t *testing.T) {
 	for _, item := range tables {
 		operation, err := ReadDirFile(item.path)
 
-		if err != "" {
+		if err != nil {
 			qtyPass++
 		}
 
@@ -56,31 +53,45 @@ func TestReadDirFile(t *testing.T) {
 
 func TestReadFile(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	//total de archivos por [all_documents]
+	//mas error generado por[data/ERROR]
+	qtyPassExpected := 629
 
 	tables := []struct {
 		pathFile string
 		dataMail string
 	}{
 		{
-			"../../data/allen-p/inbox/1.",
+			"../../data/allen-p/all_documents/",
 			"",
 		},
 		{
-			"../../data/allen-p/inbox/ERROR",
+			"../../data/ERROR",
 			"",
 		},
 	}
 
 	for _, item := range tables {
-		operation, err := ReadFile(item.pathFile)
-
+		//obtiene lista de archivos
+		//por ruta enviada
+		files, err := ReadDirFile(item.pathFile)
 		if err != nil {
-			qtyPass++
+			//se asigna error de [ReadDirFile]
+			//para testear [ReadFile]
+			files = map[string]bool{err.Error(): false}
 		}
 
-		if operation == item.dataMail {
-			qtyPass++
+		for fileName := range files {
+			fullPath := item.pathFile + fileName
+
+			operation, err := ReadFile(fullPath)
+			if err != nil {
+				qtyPass++
+			}
+
+			if operation != item.dataMail {
+				qtyPass++
+			}
 		}
 	}
 
@@ -89,6 +100,7 @@ func TestReadFile(t *testing.T) {
 	}
 }
 
+/*
 // extrae dato de propiedades del correo y contenido
 func TestExtractData(t *testing.T) {
 	var qtyPass int
@@ -375,3 +387,4 @@ func TestDeleteDocuments(t *testing.T) {
 		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
 	}
 }
+*/

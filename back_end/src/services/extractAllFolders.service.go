@@ -1,7 +1,6 @@
 package services
 
-func ExtractAllFolders(pathFile string, dirFile map[string]bool) string {
-	var errMsg string
+func ExtractAllFolders(pathFile string, dirFile map[string]bool) error {
 	/*
 		// TEMPORAL [X]
 		// filtra carpeta
@@ -22,8 +21,8 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) string {
 		// se omiten archivos por fuera de carpetas
 		pathPerUser := pathFile + userFolder
 		dirPerUser, err := ReadDirFile(pathPerUser)
-		if err != "" {
-			errMsg = err
+		if err != nil {
+			return err
 		}
 
 		/*
@@ -131,5 +130,5 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) string {
 		}
 	}
 
-	return errMsg
+	return nil
 }
