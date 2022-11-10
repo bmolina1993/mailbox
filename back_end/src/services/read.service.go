@@ -6,12 +6,12 @@ import (
 
 // Lista carpeta/archivo
 // valida si es carpeta
-func ReadDirFile(path string) (map[string]bool, error) {
-	var errMsg error
+func ReadDirFile(path string) (map[string]bool, string) {
+	var errMsg string
 	files, err := os.ReadDir(path)
 
 	if err != nil {
-		errMsg = err
+		errMsg = err.Error()
 	}
 	// map con nombre archivo
 	// y bool si es carpeta

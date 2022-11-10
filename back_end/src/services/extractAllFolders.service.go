@@ -1,14 +1,12 @@
 package services
 
-import "fmt"
-
-func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
-
+func ExtractAllFolders(pathFile string, dirFile map[string]bool) string {
+	var errMsg string
 	/*
 		// TEMPORAL [X]
 		// filtra carpeta
 		for fileToDelete := range dirFile {
-			//motley-m -> 4 niveles |  -> 6 niveles
+			//motley-m -> 4 niveles | "stokley-c" -> 6 niveles
 			if fileToDelete != "stokley-c" {
 				delete(dirFile, fileToDelete)
 			}
@@ -23,7 +21,10 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
 		// iteracion por usuario,
 		// se omiten archivos por fuera de carpetas
 		pathPerUser := pathFile + userFolder
-		dirPerUser, _ := ReadDirFile(pathPerUser)
+		dirPerUser, err := ReadDirFile(pathPerUser)
+		if err != "" {
+			errMsg = err
+		}
 
 		/*
 			// TEMPORAL [X]
@@ -41,7 +42,7 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
 		*/
 
 		for folderName, isDir := range dirPerUser { // [2/6 niveles]
-			fmt.Println("\n--> recorre cada archivo por carpeta de usuario [2/6] <--")
+			//fmt.Println("\n--> recorre cada archivo por carpeta de usuario [2/6] <--")
 			if isDir {
 				pathFoldersInsidePerUser := pathPerUser + "/" + folderName
 				qtyFolders, dataFolders := ExtractDataPerFile(pathFoldersInsidePerUser, folderName, userFolder)
@@ -49,68 +50,86 @@ func ExtractAllFolders(pathFile string, dirFile map[string]bool) {
 				for qtyFolders > 0 { // [3/6 niveles]
 					for fullPathFile, folderNested := range dataFolders {
 
-						fmt.Println("\n--> ExtractDataPerFile [PARAMS] [3/6] <--")
-						fmt.Println("fullPathFile:", fullPathFile)
-						fmt.Println("folderNested:", folderNested)
-						fmt.Println("userFolder:", userFolder)
+						/*
+							fmt.Println("\n--> ExtractDataPerFile [PARAMS] [3/6] <--")
+							fmt.Println("fullPathFile:", fullPathFile)
+							fmt.Println("folderNested:", folderNested)
+							fmt.Println("userFolder:", userFolder)
+						*/
 
 						qtyFolders, dataFolders = ExtractDataPerFile(fullPathFile, folderNested, userFolder)
 
 						for qtyFolders > 0 { // [4/6 niveles]
 							for fullPathFile, folderNested := range dataFolders {
 
-								fmt.Println("\n--> ExtractDataPerFile [PARAMS] [4/6] <--")
-								fmt.Println("fullPathFile:", fullPathFile)
-								fmt.Println("folderNested:", folderNested)
-								fmt.Println("userFolder:", userFolder)
+								/*
+									fmt.Println("\n--> ExtractDataPerFile [PARAMS] [4/6] <--")
+									fmt.Println("fullPathFile:", fullPathFile)
+									fmt.Println("folderNested:", folderNested)
+									fmt.Println("userFolder:", userFolder)
+								*/
 
 								qtyFolders, dataFolders = ExtractDataPerFile(fullPathFile, folderNested, userFolder)
 
 								for qtyFolders > 0 { // [5/6 niveles]
 									for fullPathFile, folderNested := range dataFolders {
 
-										fmt.Println("\n--> ExtractDataPerFile [PARAMS] [5/6] <--")
-										fmt.Println("fullPathFile:", fullPathFile)
-										fmt.Println("folderNested:", folderNested)
-										fmt.Println("userFolder:", userFolder)
+										/*
+											fmt.Println("\n--> ExtractDataPerFile [PARAMS] [5/6] <--")
+											fmt.Println("fullPathFile:", fullPathFile)
+											fmt.Println("folderNested:", folderNested)
+											fmt.Println("userFolder:", userFolder)
+										*/
 
 										qtyFolders, dataFolders = ExtractDataPerFile(fullPathFile, folderNested, userFolder)
 
 										for qtyFolders > 0 { // [6/6 niveles]
 											for fullPathFile, folderNested := range dataFolders {
 
-												fmt.Println("\n--> ExtractDataPerFile [PARAMS] [6/6] <--")
-												fmt.Println("fullPathFile:", fullPathFile)
-												fmt.Println("folderNested:", folderNested)
-												fmt.Println("userFolder:", userFolder)
+												/*
+													fmt.Println("\n--> ExtractDataPerFile [PARAMS] [6/6] <--")
+													fmt.Println("fullPathFile:", fullPathFile)
+													fmt.Println("folderNested:", folderNested)
+													fmt.Println("userFolder:", userFolder)
+												*/
 
 												qtyFolders, dataFolders = ExtractDataPerFile(fullPathFile, folderNested, userFolder)
 
-												fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [6/6] <--")
-												fmt.Println("qtyFolders:", qtyFolders)
-												fmt.Println("dataFolders:", dataFolders)
+												/*
+													fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [6/6] <--")
+													fmt.Println("qtyFolders:", qtyFolders)
+													fmt.Println("dataFolders:", dataFolders)
+												*/
 											}
 										}
 
-										fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [5/6] <--")
-										fmt.Println("qtyFolders:", qtyFolders)
-										fmt.Println("dataFolders:", dataFolders)
+										/*
+											fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [5/6] <--")
+											fmt.Println("qtyFolders:", qtyFolders)
+											fmt.Println("dataFolders:", dataFolders)
+										*/
 									}
 								}
 
-								fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [4/6] <--")
-								fmt.Println("qtyFolders:", qtyFolders)
-								fmt.Println("dataFolders:", dataFolders)
+								/*
+									fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [4/6] <--")
+									fmt.Println("qtyFolders:", qtyFolders)
+									fmt.Println("dataFolders:", dataFolders)
+								*/
 							}
 						}
 
-						fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [3/6] <--")
-						fmt.Println("qtyFolders:", qtyFolders)
-						fmt.Println("dataFolders:", dataFolders)
+						/*
+							fmt.Println("\n--> ExtractDataPerFile [RETURNS DATA] [3/6] <--")
+							fmt.Println("qtyFolders:", qtyFolders)
+							fmt.Println("dataFolders:", dataFolders)
+						*/
 
 					}
 				}
 			}
 		}
 	}
+
+	return errMsg
 }

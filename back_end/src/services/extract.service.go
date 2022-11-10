@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -94,10 +93,12 @@ func extractPropSubject(props string) string {
 func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]string) {
 	files, _ := ReadDirFile(path)
 
-	fmt.Println("\n *** ExtractDataPerFile ***")
-	fmt.Println("path:", path)             //[x]
-	fmt.Println("folder:", folder)         //[x]
-	fmt.Println("userFolder:", userFolder) //[x]
+	/*
+		fmt.Println("\n *** ExtractDataPerFile ***")
+		fmt.Println("path:", path)             //[x]
+		fmt.Println("folder:", folder)         //[x]
+		fmt.Println("userFolder:", userFolder) //[x]
+	*/
 
 	//instanciamos struct mail
 	dataMail := entity.QueryMail{}
@@ -139,9 +140,11 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 		}
 	}
 
-	fmt.Println("qtyFiles:", qtyFiles)       //[x]
-	fmt.Println("qtyFolders:", qtyFolders)   //[x]
-	fmt.Println("dataFolders:", dataFolders) //[x]
+	/*
+		fmt.Println("qtyFiles:", qtyFiles)       //[x]
+		fmt.Println("qtyFolders:", qtyFolders)   //[x]
+		fmt.Println("dataFolders:", dataFolders) //[x]
+	*/
 
 	//post api para insercion de datos masivo
 	PostApiBulkData(dataMail)

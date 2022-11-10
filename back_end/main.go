@@ -18,7 +18,8 @@ func main() {
 
 	//recorre cada carpeta de usuario
 	//y sus sub-carpetas para hacer post api de data
-	service.ExtractAllFolders(pathFile, dirFile)
+	err := service.ExtractAllFolders(pathFile, dirFile)
+	fmt.Println("ExtractAllFolders-error:", err)
 
 	//borra todos los documentos[para pruebas][x]
 	//recorre cara carpeta de usuario

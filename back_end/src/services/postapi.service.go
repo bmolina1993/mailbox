@@ -3,8 +3,6 @@ package services
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
 	"log"
 	"net/http"
 
@@ -38,11 +36,17 @@ func PostApiBulkData(data entity.QueryMail) {
 	}
 	defer resp.Body.Close()
 
-	log.Println("--> LOG POST API <--")
-	log.Println("resp.StatusCode:", resp.StatusCode)
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(string(body))
+	/*
+		log.Println("--> LOG POST API <--")
+		log.Println("resp.StatusCode:", resp.StatusCode)
+	*/
+
+	/*
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(string(body))
+	*/
 }
