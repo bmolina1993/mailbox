@@ -1,0 +1,61 @@
+Total: 4.56s
+ROUTINE ======================== github.com/bmolina1993/mailbox/src/services.DeleteDocuments in /home/bmolina/go/src/truora/back_end/src/services/deleteDocuments.service.go
+         0      520ms (flat, cum) 11.40% of Total
+         .          .     64:}
+         .          .     65:
+         .          .     66:func DeleteDocuments(userFolder string) error {
+         .          .     67:	var statusCode int
+         .          .     68:	URL_DELETE := "http://localhost:4080/api/" + userFolder + "/_doc/"
+         .      190ms     69:	idDocumetns, _ := GetIdsDocuments()
+         .          .     70:	listIds := idDocumetns.Hits.Hits
+         .          .     71:
+         .          .     72:	fmt.Println("\n\n--> LOG DELETE DOCUMENTS API <--")
+         .          .     73:	fmt.Print("En progreso...")
+         .          .     74:	for _, idDocument := range listIds {
+         .          .     75:		Id := idDocument.Id
+         .          .     76:		URL_DELETE_ID := URL_DELETE + Id
+         .          .     77:
+         .       40ms     78:		req, err := http.NewRequest("DELETE", URL_DELETE_ID, bytes.NewBuffer([]byte{}))
+         .          .     79:		if err != nil {
+         .          .     80:			return err
+         .          .     81:		}
+         .       10ms     82:		req.SetBasicAuth("admin", "Complexpass#123")
+         .          .     83:		req.Header.Set("Content-Type", "application/json")
+         .          .     84:		req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
+         .          .     85:
+         .      250ms     86:		resp, err := http.DefaultClient.Do(req)
+         .          .     87:		if err != nil {
+         .          .     88:			return err
+         .          .     89:		}
+         .          .     90:		defer resp.Body.Close()
+         .          .     91:
+         .          .     92:		statusCode = resp.StatusCode
+         .          .     93:		/*
+         .          .     94:			body, err := io.ReadAll(resp.Body)
+         .          .     95:			if err != nil {
+         .          .     96:				return err
+         .          .     97:			}
+         .          .     98:
+         .          .     99:
+         .          .    100:			fmt.Println("\nuserFolder:", userFolder)
+         .          .    101:			fmt.Println("StatusCode:", resp.StatusCode)
+         .          .    102:			fmt.Println("body:", string(body))
+         .          .    103:		*/
+         .          .    104:	}
+         .          .    105:	fmt.Println("\nStatusCode:", statusCode)
+         .          .    106:
+         .       30ms    107:	return nil
+         .          .    108:}
+ROUTINE ======================== github.com/bmolina1993/mailbox/src/services.TestDeleteDocuments in /home/bmolina/go/src/truora/back_end/src/services/main_test.go
+         0      520ms (flat, cum) 11.40% of Total
+         .          .    364:
+         .          .    365:func TestDeleteDocuments(t *testing.T) {
+         .          .    366:	var qtyPass int
+         .          .    367:	qtyPassExpected := 1
+         .          .    368:
+         .      520ms    369:	err := DeleteDocuments("stokley-c")
+         .          .    370:	if err == nil {
+         .          .    371:		qtyPass++
+         .          .    372:	}
+         .          .    373:
+         .          .    374:	if qtyPass != qtyPassExpected {

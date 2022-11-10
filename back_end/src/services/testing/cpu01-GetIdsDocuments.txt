@@ -1,0 +1,27 @@
+Total: 4.56s
+ROUTINE ======================== github.com/bmolina1993/mailbox/src/services.GetIdsDocuments in /home/bmolina/go/src/truora/back_end/src/services/deleteDocuments.service.go
+         0      400ms (flat, cum)  8.77% of Total
+         .          .     55:
+         .          .     56:	fmt.Println("--> LOG GET DOCUMENTS API <--")
+         .          .     57:	fmt.Print("En progreso...")
+         .          .     58:	fmt.Println("\nStatusCode:", resp.StatusCode)
+         .          .     59:
+         .      400ms     60:	json.NewDecoder(resp.Body).Decode(&getDocProps)
+         .          .     61:
+         .          .     62:	//fmt.Printf("%+v \n", getDocProps)
+         .          .     63:	return getDocProps, nil
+         .          .     64:}
+         .          .     65:
+ROUTINE ======================== github.com/bmolina1993/mailbox/src/services.TestGetIdsDocuments in /home/bmolina/go/src/truora/back_end/src/services/main_test.go
+         0      210ms (flat, cum)  4.61% of Total
+         .          .    350:
+         .          .    351:func TestGetIdsDocuments(t *testing.T) {
+         .          .    352:	var qtyPass int
+         .          .    353:	qtyPassExpected := 1
+         .          .    354:
+         .      210ms    355:	_, err := GetIdsDocuments()
+         .          .    356:	if err == nil {
+         .          .    357:		qtyPass++
+         .          .    358:	}
+         .          .    359:
+         .          .    360:	if qtyPass != qtyPassExpected {
