@@ -1,0 +1,14 @@
+Total: 20ms
+ROUTINE ======================== github.com/bmolina1993/mailbox/src/services.TestExtractPropDate in /home/bmolina/go/src/truora/back_end/src/services/main_test.go
+         0       10ms (flat, cum) 50.00% of Total
+         .          .    157:		files, _ := ReadDirFile(item.pathFile)
+         .          .    158:
+         .          .    159:		for fileName := range files {
+         .          .    160:			fullPath := item.pathFile + fileName
+         .          .    161:
+         .       10ms    162:			data, _ := ReadFile(fullPath)
+         .          .    163:			props, _ := ExtractData(data)
+         .          .    164:			date := extractPropDate(props)
+         .          .    165:
+         .          .    166:			if date != item.date {
+         .          .    167:				qtyPass++
