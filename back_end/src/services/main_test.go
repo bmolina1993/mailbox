@@ -100,34 +100,36 @@ func TestReadFile(t *testing.T) {
 	}
 }
 
-/*
 // extrae dato de propiedades del correo y contenido
 func TestExtractData(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	qtyPassExpected := 628
 	tables := []struct {
 		pathFile string
 		props    string
 		body     string
 	}{
 		{
-			"../../data/allen-p/inbox/1.",
-			"",
-			"",
-		},
-		{
-			"../../data/allen-p/inbox/2.",
+			"../../data/allen-p/all_documents/",
 			"",
 			"",
 		},
 	}
 
 	for _, item := range tables {
-		data, _ := ReadFile(item.pathFile)
-		props, body := ExtractData(data)
+		//obtiene lista de archivos
+		//por ruta enviada
+		files, _ := ReadDirFile(item.pathFile)
 
-		if props != item.props && body != item.body {
-			qtyPass++
+		for fileName := range files {
+			fullPath := item.pathFile + fileName
+
+			data, _ := ReadFile(fullPath)
+			props, body := ExtractData(data)
+
+			if props != item.props && body != item.body {
+				qtyPass++
+			}
 		}
 	}
 
@@ -136,6 +138,7 @@ func TestExtractData(t *testing.T) {
 	}
 }
 
+/*
 // extrae fecha de envio
 func TestExtractPropDate(t *testing.T) {
 	var qtyPass int
