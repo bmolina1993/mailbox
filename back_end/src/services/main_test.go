@@ -138,32 +138,34 @@ func TestExtractData(t *testing.T) {
 	}
 }
 
-/*
 // extrae fecha de envio
 func TestExtractPropDate(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	qtyPassExpected := 628
 	tables := []struct {
 		pathFile string
 		date     string
 	}{
 		{
-			"../../data/allen-p/inbox/1.",
-			"",
-		},
-		{
-			"../../data/allen-p/inbox/2.",
+			"../../data/allen-p/all_documents/",
 			"",
 		},
 	}
 
 	for _, item := range tables {
-		data, _ := ReadFile(item.pathFile)
-		props, _ := ExtractData(data)
-		date := extractPropDate(props)
 
-		if date != item.date {
-			qtyPass++
+		files, _ := ReadDirFile(item.pathFile)
+
+		for fileName := range files {
+			fullPath := item.pathFile + fileName
+
+			data, _ := ReadFile(fullPath)
+			props, _ := ExtractData(data)
+			date := extractPropDate(props)
+
+			if date != item.date {
+				qtyPass++
+			}
 		}
 	}
 
@@ -172,6 +174,7 @@ func TestExtractPropDate(t *testing.T) {
 	}
 }
 
+/*
 func TestExtractPropFrom(t *testing.T) {
 	var qtyPass int
 	qtyPassExpected := 2
