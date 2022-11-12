@@ -1,6 +1,7 @@
 package services
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -208,31 +209,33 @@ func TestExtractPropFrom(t *testing.T) {
 	}
 }
 
-/*
 func TestExtractPropTo(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	qtyPassExpected := 628
 	tables := []struct {
 		pathFile string
-		to       []string
+		from     int
 	}{
 		{
-			"../../data/allen-p/inbox/1.",
-			[]string{},
-		},
-		{
-			"../../data/allen-p/inbox/2.",
-			[]string{},
+			"../../data/allen-p/all_documents/",
+			1,
 		},
 	}
 
 	for _, item := range tables {
-		data, _ := ReadFile(item.pathFile)
-		props, _ := ExtractData(data)
-		to := extractPropTo(props)
+		files, _ := ReadDirFile(item.pathFile)
 
-		if len(to) != len(item.to) {
-			qtyPass++
+		for fileName := range files {
+			fullPath := item.pathFile + fileName
+
+			data, _ := ReadFile(fullPath)
+			props, _ := ExtractData(data)
+			to := extractPropTo(props)
+
+			if len(to) >= item.from {
+				qtyPass++
+			}
+
 		}
 	}
 
@@ -243,32 +246,35 @@ func TestExtractPropTo(t *testing.T) {
 
 func TestExtractPropSubject(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 2
+	qtyPassExpected := 1
 	tables := []struct {
 		pathFile string
 		subject  string
 	}{
 		{
-			"../../data/allen-p/inbox/1.",
-			"",
-		},
-		{
-			"../../data/allen-p/inbox/2.",
+			"../../data/allen-p/all_documents/",
 			"",
 		},
 	}
 
 	for _, item := range tables {
-		data, _ := ReadFile(item.pathFile)
-		props, _ := ExtractData(data)
-		subject := extractPropSubject(props)
+		files, _ := ReadDirFile(item.pathFile)
 
-		if subject != item.subject {
-			qtyPass++
+		for fileName := range files {
+			fullPath := item.pathFile + fileName
+
+			data, _ := ReadFile(fullPath)
+			props, _ := ExtractData(data)
+			subject := extractPropSubject(props)
+
+			if subject != item.subject {
+				qtyPass++
+			}
+
 		}
 	}
 
-	if qtyPass != qtyPassExpected {
+	if qtyPass < qtyPassExpected {
 		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
 	}
 }
@@ -313,6 +319,7 @@ func TestExtractDataPerFile(t *testing.T) {
 	}
 }
 
+/*
 func TestExtractAllFolders(t *testing.T) {
 	var qtyPass int
 	qtyPassExpected := 2
