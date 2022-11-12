@@ -3,6 +3,8 @@ package services
 import (
 	"reflect"
 	"testing"
+
+	entity "github.com/bmolina1993/mailbox/src/entities"
 )
 
 // valida si en la ruta ingresada
@@ -319,7 +321,6 @@ func TestExtractDataPerFile(t *testing.T) {
 	}
 }
 
-/*
 func TestExtractAllFolders(t *testing.T) {
 	var qtyPass int
 	qtyPassExpected := 2
@@ -350,7 +351,7 @@ func TestExtractAllFolders(t *testing.T) {
 	for _, item := range tables {
 		err := ExtractAllFolders(item.pathFile, item.dirFile)
 
-		if err == "" {
+		if err == nil {
 			qtyPass++
 		}
 
@@ -375,13 +376,19 @@ func TestPostApiBulkData(t *testing.T) {
 	}
 }
 
-func TestGetIdsDocuments(t *testing.T) {
+func TestGetIdsByUserFolder(t *testing.T) {
 	var qtyPass int
-	qtyPassExpected := 1
+	qtyPassExpected := 150
+	pathFile := "../../data/"
 
-	_, err := GetIdsDocuments()
-	if err == nil {
-		qtyPass++
+	//obtiene lista de carpeta de usuarios
+	dirFile, _ := ReadDirFile(pathFile)
+
+	for userFolder := range dirFile {
+		_, err := GetIdsByUserFolder(userFolder, false)
+		if err == nil {
+			qtyPass++
+		}
 	}
 
 	if qtyPass != qtyPassExpected {
@@ -389,6 +396,7 @@ func TestGetIdsDocuments(t *testing.T) {
 	}
 }
 
+/*
 func TestDeleteDocuments(t *testing.T) {
 	var qtyPass int
 	qtyPassExpected := 1
