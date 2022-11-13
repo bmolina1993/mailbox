@@ -376,38 +376,4 @@ func TestPostApiBulkData(t *testing.T) {
 	}
 }
 
-func TestGetIdsByUserFolder(t *testing.T) {
-	var qtyPass int
-	qtyPassExpected := 150
-	pathFile := "../../data/"
-
-	//obtiene lista de carpeta de usuarios
-	dirFile, _ := ReadDirFile(pathFile)
-
-	for userFolder := range dirFile {
-		_, err := GetIdsByUserFolder(userFolder, false)
-		if err == nil {
-			qtyPass++
-		}
-	}
-
-	if qtyPass != qtyPassExpected {
-		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
-	}
-}
-
-/*
-func TestDeleteDocuments(t *testing.T) {
-	var qtyPass int
-	qtyPassExpected := 1
-
-	err := DeleteDocuments("stokley-c")
-	if err == nil {
-		qtyPass++
-	}
-
-	if qtyPass != qtyPassExpected {
-		t.Errorf("Se esperaba %d pase/s y se obtuvieron %d", qtyPassExpected, qtyPass)
-	}
-}
-*/
+/**/

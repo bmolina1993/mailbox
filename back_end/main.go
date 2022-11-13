@@ -7,28 +7,16 @@ import (
 )
 
 func main() {
-
 	pathFile := "./data/"
 
 	//obtiene lista de carpeta de usuarios
 	dirFile, _ := service.ReadDirFile(pathFile)
-	/**/
-	fmt.Println("--> Carpetas de usuarios <--")
-	fmt.Println(dirFile)
 
 	//recorre cada carpeta de usuario
 	//y sus sub-carpetas para hacer post api de data
 	err := service.ExtractAllFolders(pathFile, dirFile)
-	fmt.Println("ExtractAllFolders-error:", err)
+	if err != nil {
+		fmt.Println("ExtractAllFolders:", err)
+	}
 
-	//borra todos los documentos[para pruebas][x]
-	//recorre cara carpeta de usuario
-	/*
-		for userFolder := range dirFile {
-			service.DeleteDocuments(userFolder)
-		}
-
-			//por carpeta de usuario especifico
-			service.DeleteDocuments("stokley-c")
-	*/
 }
