@@ -3,6 +3,8 @@ package services
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 
 	entity "github.com/bmolina1993/mailbox/src/entities"
@@ -16,9 +18,6 @@ func PostApiBulkData(data entity.QueryMail) error {
 	if err != nil {
 		return err
 	}
-
-	//data formato JSON
-	//fmt.Printf("%+v", string(dataJson))
 
 	//post api
 	req, err := http.NewRequest("POST", URL, bytes.NewBuffer(dataJson))
@@ -37,19 +36,14 @@ func PostApiBulkData(data entity.QueryMail) error {
 
 	defer resp.Body.Close()
 
-	/*
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		} else{
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 
-		}
-
-
-		fmt.Println("\n--> LOG POST API <--")
-		fmt.Println("StatusCode:", resp.StatusCode)
-		fmt.Println(string(body))
-	*/
+	fmt.Println("\n--> LOG POST API <--")
+	fmt.Println("StatusCode:", resp.StatusCode)
+	fmt.Println("body:", string(body))
 
 	return nil
 }

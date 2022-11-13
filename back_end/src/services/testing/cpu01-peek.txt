@@ -1,0 +1,21 @@
+Showing nodes accounting for 210ms, 100% of 210ms total
+----------------------------------------------------------+-------------
+      flat  flat%   sum%        cum   cum%   calls calls% + context 	 	 
+----------------------------------------------------------+-------------
+                                             130ms   100% |   testing.tRunner
+         0     0%     0%      130ms 61.90%                | github.com/bmolina1993/mailbox/src/services.TestExtractAllFolders
+                                             130ms   100% |   github.com/bmolina1993/mailbox/src/services.ExtractAllFolders
+----------------------------------------------------------+-------------
+                                              10ms   100% |   testing.tRunner
+         0     0%     0%       10ms  4.76%                | github.com/bmolina1993/mailbox/src/services.TestExtractData
+                                              10ms   100% |   github.com/bmolina1993/mailbox/src/services.ReadFile (inline)
+----------------------------------------------------------+-------------
+                                              20ms   100% |   testing.tRunner
+         0     0%     0%       20ms  9.52%                | github.com/bmolina1993/mailbox/src/services.TestExtractPropSubject
+                                              10ms 50.00% |   github.com/bmolina1993/mailbox/src/services.ReadDirFile
+                                              10ms 50.00% |   github.com/bmolina1993/mailbox/src/services.extractPropSubject
+----------------------------------------------------------+-------------
+                                              10ms   100% |   testing.tRunner
+         0     0%     0%       10ms  4.76%                | github.com/bmolina1993/mailbox/src/services.TestExtractPropTo
+                                              10ms   100% |   github.com/bmolina1993/mailbox/src/services.ReadFile (inline)
+----------------------------------------------------------+-------------

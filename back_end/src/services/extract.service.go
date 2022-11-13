@@ -21,7 +21,6 @@ func ExtractData(data string) (props, body string) {
 	//obtiene todo el contenido, luego del 1er salto de linea
 	auxBodyContent := strings.SplitN(auxBody, "\n", 2)
 	bodyContent := auxBodyContent[1]
-	//fmt.Println(bodyContent)
 
 	// retorna propiedades y body
 	return properties, bodyContent
@@ -93,13 +92,6 @@ func extractPropSubject(props string) string {
 func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]string) {
 	files, _ := ReadDirFile(path)
 
-	/*
-		fmt.Println("\n *** ExtractDataPerFile ***")
-		fmt.Println("path:", path)             //[x]
-		fmt.Println("folder:", folder)         //[x]
-		fmt.Println("userFolder:", userFolder) //[x]
-	*/
-
 	//instanciamos struct mail
 	dataMail := entity.QueryMail{}
 	dataFolders := make(map[string]string)
@@ -117,7 +109,6 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 			//extraccion de dato mail
 			auxData, _ := ReadFile(fullPathFile)
 			props, body := ExtractData(auxData)
-			//props, _ := ExtractData(auxData)
 
 			date := extractPropDate(props)
 			from := extractPropFrom(props)
@@ -139,12 +130,6 @@ func ExtractDataPerFile(path, folder, userFolder string) (a int, b map[string]st
 			dataFolders[fullPathFile] = folder + "/" + fileName
 		}
 	}
-
-	/*
-		fmt.Println("qtyFiles:", qtyFiles)       //[x]
-		fmt.Println("qtyFolders:", qtyFolders)   //[x]
-		fmt.Println("dataFolders:", dataFolders) //[x]
-	*/
 
 	//post api para insercion de datos masivo
 	PostApiBulkData(dataMail)
