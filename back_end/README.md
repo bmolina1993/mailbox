@@ -33,7 +33,7 @@
 </p>
 
 # 1. ZincSearch
-Motor de búsqueda de datos e indexación de texto.
+Motor de búsqueda de datos e indexación de texto.  
 Para más información: 👉 [`URL`](https://docs.zincsearch.com/quickstart/)
 
 ### 1.1 Instalación por Docker 🐋
@@ -45,7 +45,7 @@ $ sudo docker pull public.ecr.aws/zinclabs/zinc:0.3.3
 $ sudo docker tag public.ecr.aws/zinclabs/zinc:0.3.3 zinc:0.3.3
 ```
 ### 1.3 Creación de contenedor
-Creado con las siguientes caracteristicas:
+Creado con las siguientes caracteristicas:  
 **Nombre:** zinc | **Puerto:** 4080 | **Usuario:** admin | **Contraseña:** Complexpass#123
 ```bash
 $ sudo docker create -p4080:4080 --name zinc -v /full/path/of/data:/data -e ZINC_DATA_PATH="/data" -e ZINC_FIRST_ADMIN_USER=admin -e ZINC_FIRST_ADMIN_PASSWORD=Complexpass#123 zinc:0.3.3
@@ -67,7 +67,7 @@ $ go run main.go
 ```
 
 ### Resultado
-Con los siguientes datos podremos ver los registros almacenados:
+Con los siguientes datos podremos ver los registros almacenados:  
 **Herramienta**: Postman
 **Auth**: Basic Auto(credenciales previamente generada)
 **Endpoint**: http://localhost:4080/es/_search

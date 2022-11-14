@@ -1,8 +1,7 @@
 # 📬 Buzón de correo 📧
 ## BackEnd
-Recorre cada carpeta de usuario para extraer toda la data del correo
+Recorre cada carpeta de usuario para extraer toda la data del correo  
 Para más información: 👉 [`README`](back_end/README.md)
-<!-- <a href="back_end/README.md">README</a> -->
 
 ### Resultado
 ```json
