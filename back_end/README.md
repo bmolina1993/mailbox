@@ -54,7 +54,7 @@ $ sudo docker create -p4080:4080 --name zinc -v /full/path/of/data:/data -e ZINC
 ```bash
 $ sudo docker start zinc
 ```
-### 1.5 User interface 🌐
+### 1.5 Interfaz de usuario 🌐
 [http://localhost:4080](http://localhost:4080)
 
 # 2. Proyecto GO
