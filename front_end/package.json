@@ -1,0 +1,24 @@
+{
+  "name": "mailbox",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "Braian Molina <braian_gabriel_1993@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "3.2.41"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "3.1.2",
+    "autoprefixer": "10.4.13",
+    "postcss": "8.4.19",
+    "prettier": "2.7.1",
+    "prettier-plugin-tailwindcss": "0.1.13",
+    "tailwind-scrollbar": "2.0.1",
+    "tailwindcss": "3.1.8",
+    "vite": "3.1.8"
+  }
+}
