@@ -1,6 +1,172 @@
 <script setup>
+import { stringify } from "postcss";
+import { onMounted } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+
+onMounted(async () => {
+  console.log("👉 Mounted 👈");
+
+  const response = await fetch("http://localhost:4080/es/_search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Basic " + btoa("admin:Complexpass#123"),
+    },
+    body: JSON.stringify({
+      search_type: "matchall",
+      from: 0,
+      size: 517424,
+    }),
+  });
+
+  //se deja alias [data] a campo [hits]
+  const {
+    hits: { hits: data },
+  } = await response.json();
+
+  /*
+  console.log("response:", response);
+  console.log("data:", data);
+  */
+
+  //[arora-h] -> usuario con sub-carpetas
+  const dataV2 = data.filter(
+    (item) => (item._index == "arora-h") | (item._index == "allen-p")
+  );
+  //console.log("dataV2:", dataV2);
+
+  // constante con data final de estructura deseada
+  // filtra por carpeta [inbox] que contiene sub-carpetas
+  const dataV3 = dataV2
+    .map((item) => {
+      return {
+        index: item._index,
+        body: item._source.Body,
+        date: item._source.Date,
+        folder: item._source.Folder,
+        from: item._source.From,
+        subject: item._source.Subject,
+        to: item._source.To,
+      };
+    })
+    .filter((item) =>
+      ["deleted_items", "inbox"].some((itemCond) =>
+        item.folder.includes(itemCond)
+      )
+    );
+  console.log("dataV3:", dataV3);
+
+  /*
+
+  //obtiene lista de usuarios
+  //const auxUserFolder = dataV3.map((item) => item.index);
+  const auxUserFolder = dataV3.map((item) => {
+    return {
+      index: item.index,
+      folder: item.folder,
+    };
+  });
+  console.log("auxUserFolder:", auxUserFolder);
+
+  const auxUser = dataV3.map((item) => {
+    return {
+      index: item.index,
+    };
+  });
+  console.log("auxUser:", auxUser);
+
+  //quita duplicados
+  //const userFolder = [...new Set(auxUserFolder)];
+  //console.log("userFolder:", userFolder);
+
+  let user = auxUser.reduce((prevValue, currentValue) => {
+    if (!prevValue.some((obj) => obj.index === currentValue.index)) {
+      prevValue.push(currentValue);
+    }
+    return prevValue;
+  }, []);
+  console.log("user:", user);
+
+  let userFolder = auxUserFolder.reduce((prevValue, currentValue) => {
+    if (
+      !prevValue.some(
+        (obj) =>
+          obj.index === currentValue.index && obj.folder === currentValue.folder
+      )
+    ) {
+      prevValue.push(currentValue);
+    }
+    return prevValue;
+  }, []);
+  console.log("userFolder:", userFolder);
+
+  //separa en grupo de usuario
+  const arrPerUser = [];
+
+  for (let idx in userFolder) {
+    //obtiene todo elem. de dato por indice
+    const elem = userFolder[idx];
+
+    // if (arrPerUser.index == elem.index) {
+    //   arrPerUser.push(elem.folder);
+    // }
+
+    user.map((item, idx) => {
+      if (item.index == elem.index) {
+        //arrPerUser[idx] = [];
+        arrPerUser[idx].push(elem);
+      }
+    });
+  }
+
+  console.log("arrPerUser:", arrPerUser);
+
+  //objetivo a lograr
+  const objToCompare = {
+    index: "arora-h",
+    folder: "inbox",
+    items: [],
+    children: [
+      {
+        folder: "inbox/saved_mail",
+        items: [],
+        children: [],
+      },
+      {
+        folder: "inbox/hist_vols",
+        items: [],
+        children: [
+          {
+            folder: "inbox/hist_vols/otro",
+            items: [],
+            children: [],
+          },
+        ],
+      },
+    ],
+  };
+
+  //agrega elems.hijos a cada sub-carpeta de json anterior
+  for (let key in dataV3) {
+    //obtiene todo el indice de dato
+    const elem = dataV3[key];
+    //si carpeta raiz concide con array de datos, ingresa los que sean iguales [1/6]
+    if (objToCompare.folder == elem.folder) {
+      objToCompare.items.push(elem);
+    }
+
+    //a la sub-carpeta del root, agrega los elementos [2/6]
+    objToCompare.children.map((item, idx) => {
+      if (item.folder == elem.folder) {
+        objToCompare.children[idx].items.push(elem);
+      }
+    });
+
+    //console.log("elem:", elem);
+  }
+  console.log("objToCompare:", objToCompare);
+  */
+});
 </script>
 
 <template>
@@ -18,36 +184,7 @@ import TheWelcome from "./components/TheWelcome.vue";
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <main></main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
