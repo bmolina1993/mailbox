@@ -1,7 +1,7 @@
 <script setup>
-import { onBeforeMount, onMounted, provide, reactive } from "vue";
+import { onBeforeMount, provide, reactive } from "vue";
 import { Searcher, Mails } from "./components/";
-import { useFetch } from "./utils/fetch";
+import { useFetch } from "./utils/";
 
 let dataAPI = reactive({ data: [] });
 

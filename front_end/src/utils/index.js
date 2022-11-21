@@ -51,6 +51,23 @@ export const useFetch = async () => {
   return dataV3;
 };
 
+export const getDate = (auxDate, type) => {
+  const date = new Date(auxDate);
+
+  switch (type) {
+    case "mmm":
+      return new Intl.DateTimeFormat("es-ar", {
+        month: "short",
+      }).format(new Date(date));
+
+    case "dd":
+      return new Date(date).getDay();
+
+    default:
+      return new Date(date);
+  }
+};
+
 /*
 
   //obtiene lista de usuarios
