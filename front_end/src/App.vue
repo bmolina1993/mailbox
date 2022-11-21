@@ -1,7 +1,6 @@
 <script setup>
-import { stringify } from "postcss";
 import { onMounted } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import { Searcher, Mails } from "./components/";
 
 onMounted(async () => {
   console.log("👉 Mounted 👈");
@@ -170,21 +169,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <header class="bg-lime-900 text-sm text-amber-300">
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+  <header class="mt-3">
+    <Searcher />
   </header>
 
-  <main></main>
+  <main class="mt-3">
+    <Mails />
+  </main>
 </template>
 
 <style scoped></style>

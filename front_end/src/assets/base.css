@@ -4,6 +4,9 @@
 
 @layer base {
   body {
-    font-family: Roboto, sans-serif, "Segoe UI", Ubuntu;
+    @apply bg-gray-900 font-roboto md:px-5;
+  }
+  body #app > :not(main) {
+    @apply px-5;
   }
 }
