@@ -51,6 +51,8 @@ export const useFetch = async () => {
   return dataV3;
 };
 
+// format ["Wed, 21 Nov 2001 05:13:17 -0800 (PST)"]
+// to custom data defined
 export const getDate = (auxDate, type) => {
   const date = new Date(auxDate);
 
@@ -63,12 +65,15 @@ export const getDate = (auxDate, type) => {
     case "dd":
       return new Date(date).getDay();
 
+    case "long":
+      return new Date(date).toLocaleString("es-CO");
+
     default:
       return new Date(date);
   }
 };
 
-export const getFirstLetter = (word) => {
+export const getFirstLetter = (word = "") => {
   return word.substr(0, 1).toLocaleUpperCase();
 };
 
