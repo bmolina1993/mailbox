@@ -4,12 +4,15 @@ import { Searcher, Mails } from "./components/";
 import { useFetch } from "./utils/";
 
 let dataAPI = reactive({ data: [] });
+let dataSearcher = reactive({ data: [] });
 
 onBeforeMount(async () => {
   dataAPI.data = await useFetch();
+  dataSearcher.data = dataAPI.data;
 });
 
 provide("dataAPI", dataAPI);
+provide("dataSearcher", dataSearcher);
 </script>
 
 <template>

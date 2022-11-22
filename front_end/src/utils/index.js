@@ -77,6 +77,8 @@ export const getFirstLetter = (word = "") => {
   return word.substr(0, 1).toLocaleUpperCase();
 };
 
+export const proxyToObject = (data) => JSON.parse(JSON.stringify(data));
+
 /*
 
   //obtiene lista de usuarios
