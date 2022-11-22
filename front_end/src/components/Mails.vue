@@ -92,10 +92,10 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
     </section>
   </teleport>
 
-  <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 px-5 py-2">
+  <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
     <ul
       style="border: 1px solid"
-      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between text-white hover:bg-darkSecondary"
+      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between px-5 text-white hover:bg-darkSecondary"
       v-for="item in dataSearcher?.data"
       @click="toggle(proxyToObject(item))"
     >
