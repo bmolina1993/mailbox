@@ -8,6 +8,15 @@ module.exports = {
         // sanFrancisco: "url('/public/img/sanFrancisco.jpg')",
       },
 
+      colors: {
+        darkPrimary: "#1E293B",
+        darkSecondary: "#293548",
+        primary: "#7986CC",
+        secondary: "#E06055",
+        tertiary: "#4CB6AC",
+        fourth: "#9CCC66",
+      },
+
       backgroundColor: (theme) => ({
         ...theme("colors"),
         darkPrimary: "#1E293B",
@@ -17,6 +26,7 @@ module.exports = {
         tertiary: "#4CB6AC",
         fourth: "#9CCC66",
       }),
+
       /*
       textColor: {
         primary: "#CC2D4A",
@@ -29,10 +39,9 @@ module.exports = {
       roboto: ["Roboto", "sans-serif", "Segoe UI", "Ubuntu"],
     },
   },
-  /*
+  /**/
   plugins: [require("tailwind-scrollbar")],
   variants: {
     scrollbar: ["rounded"],
   },
-  */
 };

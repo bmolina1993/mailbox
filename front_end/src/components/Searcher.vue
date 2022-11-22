@@ -11,6 +11,7 @@
         name="searchId"
         id="searchId"
         class="h-6 w-full bg-transparent text-white outline-0"
+        placeholder="Buscar..."
       />
     </div>
     <div class="h-6 w-6 shrink-0 rounded-full bg-gray-300"></div>

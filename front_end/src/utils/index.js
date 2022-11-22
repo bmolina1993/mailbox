@@ -68,6 +68,10 @@ export const getDate = (auxDate, type) => {
   }
 };
 
+export const getFirstLetter = (word) => {
+  return word.substr(0, 1).toLocaleUpperCase();
+};
+
 /*
 
   //obtiene lista de usuarios

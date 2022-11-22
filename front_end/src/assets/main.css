@@ -1,1 +1,17 @@
 @import "./base.css";
+
+@layer base {
+  /* agrega colores a los circulos de correos */
+  .ulMain:nth-child(1n) .circleMail {
+    @apply bg-primary;
+  }
+  .ulMain:nth-child(2n) .circleMail {
+    @apply bg-secondary;
+  }
+  .ulMain:nth-child(3n) .circleMail {
+    @apply bg-tertiary;
+  }
+  .ulMain:nth-child(4n) .circleMail {
+    @apply bg-fourth;
+  }
+}
