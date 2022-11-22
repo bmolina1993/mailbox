@@ -27,6 +27,10 @@ const toggle = (data) => {
   //quita scroll-y en body cuando se habre modal
   document.querySelector("body").style.overflowY = "hidden";
 };
+
+const isActiveToList = ref(false);
+
+const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
 </script>
 
 <template>
@@ -70,7 +74,11 @@ const toggle = (data) => {
             se agrega padding-left(pl-14) contemplando
             width(w-12) de circulo correo y gap (gap-x-2) del padre
           -->
-          <ul class="pl-14">
+          <ul
+            @click="toggleToList"
+            class="pl-14"
+            :class="{ activeToList: isActiveToList }"
+          >
             <li
               class="listTo overflow-x-scroll overscroll-x-contain whitespace-nowrap pb-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
               v-for="itemTo in dataModal.data.to"
@@ -143,5 +151,10 @@ const toggle = (data) => {
 /* a partir del 2do [To] oculta dato  */
 .listTo:nth-child(1n + 2) {
   display: none;
+}
+
+/* activa lista [To] */
+.activeToList .listTo:nth-child(1n + 2) {
+  display: block;
 }
 </style>
