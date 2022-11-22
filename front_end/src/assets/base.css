@@ -6,8 +6,8 @@
   body {
     @apply bg-gray-900 font-roboto md:px-5;
   }
-  /*excluye a [main] del padding*/
-  body #app > :not(main) {
+  /*excluye a [main] y [#modal] del padding*/
+  body #app > :not(main, #modal) {
     @apply px-5;
   }
 }

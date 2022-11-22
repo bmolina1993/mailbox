@@ -1,11 +1,13 @@
-<script setup></script>
+<script setup>
+import { iconMenu } from "./img/";
+</script>
 
 <template>
   <div
     class="flex justify-between gap-x-1 rounded-full bg-darkSecondary px-2 py-1"
   >
     <div class="flex w-full gap-x-1">
-      <img src="./img/menu.svg" />
+      <img :src="iconMenu" />
       <input
         type="text"
         name="searchId"
