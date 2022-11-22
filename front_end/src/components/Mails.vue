@@ -4,7 +4,11 @@ import { getDate, getFirstLetter, proxyToObject } from "../utils/";
 import { iconArrowLeft } from "./img/";
 
 const dataSearcher = inject("dataSearcher");
+const showModalMenu = inject("showModalMenu");
+const dataRandomUser = inject("dataRandomUser");
 const showModal = ref(false);
+//const showModalMenu = ref(false);
+
 let dataModal = reactive({ data: {} });
 
 const closeModal = () => {
@@ -18,11 +22,18 @@ const closeModal = () => {
 const toggle = (data) => {
   //save data modal
   dataModal.data = data;
-  //open modal
+  //abre modal
   showModal.value = !showModal.value;
 
   //quita scroll-y en body cuando se habre modal
   document.querySelector("body").style.overflowY = "hidden";
+};
+const toggleModalMenu = () => {
+  //cierra modal
+  showModalMenu.value = !showModalMenu.value;
+
+  //quita scroll-y en body cuando se habre modal
+  document.querySelector("body").style.overflowY = "";
 };
 
 const isActiveToList = ref(false);
@@ -30,6 +41,7 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
 </script>
 
 <template>
+  <!-- modal detalle correo -->
   <teleport to="#app">
     <section
       id="modal"
@@ -92,6 +104,37 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
     </section>
   </teleport>
 
+  <!-- modal menu latereal -->
+  <teleport to="#app">
+    <aside
+      id="modalMenu"
+      v-show="showModalMenu"
+      class="fixed top-0 flex h-screen w-screen text-white"
+    >
+      <!-- menu lateral izq pl-5 -->
+      <div class="h-full w-4/5 bg-darkPrimary pt-3">
+        <header class="pl-5 text-xl font-bold">Mailbox connect</header>
+        <!-- perfiles -->
+        <figure
+          class="flex gap-x-2.5 overflow-y-hidden overflow-x-scroll overscroll-x-contain whitespace-nowrap border-y py-2.5 pl-5 pb-2.5 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
+        >
+          <img
+            v-for="item in dataRandomUser.data"
+            :src="item.picture"
+            class="w-12 rounded-full"
+          />
+        </figure>
+      </div>
+
+      <!-- menu lateral derecho -->
+      <div
+        @click="toggleModalMenu"
+        class="h-full w-1/5 cursor-pointer bg-menu"
+      ></div>
+    </aside>
+  </teleport>
+
+  <!-- lista correo -->
   <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
     <ul
       style="border: 1px solid"

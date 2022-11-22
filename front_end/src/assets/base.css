@@ -7,7 +7,7 @@
     @apply bg-gray-900 font-roboto md:px-5;
   }
   /*excluye a [main] y [#modal] del padding*/
-  body #app > :not(main, #modal) {
+  body #app > :not(main, #modal, #modalMenu) {
     @apply px-5;
   }
 }

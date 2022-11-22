@@ -25,6 +25,7 @@ module.exports = {
         secondary: "#E06055",
         tertiary: "#4CB6AC",
         fourth: "#9CCC66",
+        menu: "rgba(0, 0, 0, 0.5)",
       }),
 
       /*

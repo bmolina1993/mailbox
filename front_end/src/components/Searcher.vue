@@ -5,6 +5,15 @@ import { proxyToObject } from "../utils/";
 
 const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
+const showModalMenu = inject("showModalMenu");
+
+const toggleModalMenu = () => {
+  //abre modal
+  showModalMenu.value = !showModalMenu.value;
+
+  //quita scroll-y en body cuando se habre modal
+  document.querySelector("body").style.overflowY = "hidden";
+};
 
 /*
 filtra data por los siguientes campos:
@@ -35,7 +44,7 @@ const onChangeInput = (event) => {
     class="flex justify-between gap-x-1 rounded-full bg-darkSecondary px-2 py-1"
   >
     <div class="flex w-full gap-x-1">
-      <img :src="iconMenu" />
+      <img :src="iconMenu" @click="toggleModalMenu" class="cursor-pointer" />
       <input
         type="text"
         name="searchId"

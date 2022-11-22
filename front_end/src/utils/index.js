@@ -51,6 +51,27 @@ export const useFetch = async () => {
   return dataV3;
 };
 
+//obtiene usuarios random par usar imagen perfil
+export const fetchRandomUser = async () => {
+  const response = await fetch("https://randomuser.me/api/?results=150", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const { results } = await response.json();
+
+  const data = results.map((item) => {
+    return {
+      picture: item.picture.thumbnail,
+      name: null,
+    };
+  });
+
+  return data;
+};
+
 // format ["Wed, 21 Nov 2001 05:13:17 -0800 (PST)"]
 // to custom data defined
 export const getDate = (auxDate, type) => {
