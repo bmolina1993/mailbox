@@ -1,6 +1,6 @@
 <script setup>
 import { inject, ref } from "vue";
-import { iconMenu, iconUser } from "./img/";
+import { iconMenu } from "./img/";
 import { proxyToObject } from "../utils/";
 
 const dataAPI = inject("dataAPI");
@@ -53,7 +53,6 @@ const onChangeInput = (event) => {
         @input="onChangeInput"
       />
     </div>
-    <!-- <div class="h-6 w-6 shrink-0 rounded-full bg-gray-300"></div> -->
     <img :src="srcUser" class="h-6 w-6 rounded-full" />
   </div>
 </template>

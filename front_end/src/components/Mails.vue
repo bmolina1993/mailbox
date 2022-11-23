@@ -1,7 +1,7 @@
 <script setup>
 import { inject, reactive, ref } from "vue";
 import { getDate, getFirstLetter, proxyToObject } from "../utils/";
-import { iconArrowLeft } from "./img/";
+import { iconArrowLeft, iconUser } from "./img/";
 
 const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
@@ -147,6 +147,12 @@ const getUser = (event) => {
             :class="{ activeUser: item.name == isActiveUser }"
           />
         </figure>
+
+        <!-- nombre usuario seleccionado  -->
+        <div class="flex gap-x-2.5 pt-3 pl-5">
+          <img :src="isActiveUser && iconUser" />
+          {{ isActiveUser }}
+        </div>
       </div>
 
       <!-- menu lateral derecho -->
