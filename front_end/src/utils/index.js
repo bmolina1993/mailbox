@@ -18,10 +18,6 @@ export const useFetch = async () => {
   } = await response.json();
 
   /*
-  console.log("response:", response);
-  console.log("data:", data);
-  */
-
   //[arora-h] -> usuario con sub-carpetas
   const dataV2 = data.filter(
     (item) => (item._index == "arora-h") | (item._index == "allen-p")
@@ -49,6 +45,21 @@ export const useFetch = async () => {
     );
 
   return dataV3;
+  */
+
+  //[FINAL]
+  const dataReturn = data.map((item) => {
+    return {
+      index: item._index,
+      body: item._source.Body,
+      date: item._source.Date,
+      folder: item._source.Folder,
+      from: item._source.From,
+      subject: item._source.Subject,
+      to: item._source.To,
+    };
+  });
+  return dataReturn;
 };
 
 //obtiene usuarios random par usar imagen perfil

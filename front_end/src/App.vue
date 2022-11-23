@@ -21,13 +21,29 @@ onBeforeMount(async () => {
   //agrega nombre usuario a randomUser
   // ---------------------------------
   const auxUser = [];
+  //const auxFolder = [];
   dataAPI.data.forEach((item) => {
     auxUser.push(item.index);
+    /*
+    if (
+      item.folder == "inbox" ||
+      item.folder == "sent_items" ||
+      item.folder == "deleted_items" ||
+      item.folder == "all_documents"
+    ) {
+      auxFolder.push(item.folder);
+    }
+     */
   });
 
   //quita duplicados
   //se queda con lista de nombre usuarios de API mail
   const user = [...new Set(auxUser)];
+  //const folder = [...new Set(auxFolder)];
+
+  //ordena datos
+  user.sort((a, z) => a.localeCompare(z));
+  //folder.sort((a, z) => a.localeCompare(z));
 
   //agrega nombre a randomUser por indice [user]
   user.forEach((item, idx) => {
@@ -35,6 +51,7 @@ onBeforeMount(async () => {
   });
 
   //console.log("user:", user);
+  //console.log("folder:", folder);
 });
 
 //datos globales

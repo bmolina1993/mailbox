@@ -1,7 +1,14 @@
 <script setup>
 import { inject, reactive, ref } from "vue";
 import { getDate, getFirstLetter, proxyToObject } from "../utils/";
-import { iconArrowLeft, iconUser } from "./img/";
+import {
+  iconArrowLeft,
+  iconUser,
+  iconRecibidos,
+  iconEnviados,
+  iconPapelera,
+  iconTodos,
+} from "./img/";
 
 const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
@@ -148,11 +155,43 @@ const getUser = (event) => {
           />
         </figure>
 
-        <!-- nombre usuario seleccionado  -->
-        <div class="flex gap-x-2.5 pt-3 pl-5">
+        <!-- nombre usuario seleccionado -->
+        <div class="flex gap-x-2.5 pt-3 pl-5 pb-2.5">
           <img :src="isActiveUser && iconUser" />
           {{ isActiveUser }}
         </div>
+
+        <!-- lista de carpetas -->
+        <section class="px-5">
+          <div
+            id="inbox"
+            class="min- flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
+          >
+            <img class="ml-2.5 w-6" :src="iconRecibidos" />
+            Recibidos
+          </div>
+          <div
+            id="sent_items"
+            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
+          >
+            <img class="ml-2.5 w-6" :src="iconEnviados" />
+            Enviados
+          </div>
+          <div
+            id="deleted_items"
+            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
+          >
+            <img class="ml-2.5 w-6" :src="iconPapelera" />
+            Papelera
+          </div>
+          <div
+            id="all_documents"
+            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
+          >
+            <img class="ml-2.5 w-6" :src="iconTodos" />
+            Todos
+          </div>
+        </section>
       </div>
 
       <!-- menu lateral derecho -->
