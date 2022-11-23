@@ -12,6 +12,7 @@ import {
 
 const dataAPI = inject("dataAPI");
 const dataUserSelected = inject("dataUserSelected");
+const dataUserFolderSelected = inject("dataUserFolderSelected");
 const dataSearcher = inject("dataSearcher");
 const showModalMenu = inject("showModalMenu");
 const dataRandomUser = inject("dataRandomUser");
@@ -20,6 +21,7 @@ const srcUser = inject("srcUser");
 const showModal = ref(false);
 const isActiveToList = ref(false);
 const isActiveUser = ref("");
+const isActiveFolder = ref("");
 let dataModal = reactive({ data: {} });
 
 const closeModal = () => {
@@ -66,6 +68,21 @@ const getUser = (event) => {
 
   //guarda ruta img de usuario para [searcher]
   srcUser.value = event.target.src;
+};
+
+//filtra por carpeta seleccionada
+const filterByFolder = (event) => {
+  const folder = event.target.id;
+
+  //activa seleccion de carpeta
+  isActiveFolder.value = folder;
+
+  const dataFiltered = [...dataUserSelected.data].filter((item) =>
+    item.folder.includes(folder)
+  );
+
+  dataSearcher.data = proxyToObject(dataFiltered);
+  dataUserFolderSelected.data = proxyToObject(dataFiltered);
 };
 </script>
 
@@ -166,28 +183,36 @@ const getUser = (event) => {
         <!-- lista de carpetas -->
         <section class="px-5">
           <div
+            @click="filterByFolder"
             id="inbox"
+            :class="{ activeFolder: isActiveFolder == 'inbox' }"
             class="min- flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
           >
             <img class="ml-2.5 w-6" :src="iconRecibidos" />
             Recibidos
           </div>
           <div
+            @click="filterByFolder"
             id="sent_items"
+            :class="{ activeFolder: isActiveFolder == 'sent_items' }"
             class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
           >
             <img class="ml-2.5 w-6" :src="iconEnviados" />
             Enviados
           </div>
           <div
+            @click="filterByFolder"
             id="deleted_items"
+            :class="{ activeFolder: isActiveFolder == 'deleted_items' }"
             class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
           >
             <img class="ml-2.5 w-6" :src="iconPapelera" />
             Papelera
           </div>
           <div
-            id="all_documents"
+            @click="filterByFolder"
+            id=""
+            :class="{ activeFolder: isActiveFolder == '' }"
             class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
           >
             <img class="ml-2.5 w-6" :src="iconTodos" />
@@ -264,8 +289,12 @@ const getUser = (event) => {
 
 /* usuario seleccionado */
 .activeUser {
-  /* border: 2px solid #9ccc66; */
-  border: 2px solid #7986cc;
+  border: 2px solid #9ccc66;
   transform: scale(1.05);
+}
+
+/* carpeta seleccionada */
+.activeFolder {
+  background-color: #293548;
 }
 </style>

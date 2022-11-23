@@ -7,6 +7,7 @@ import { iconUser } from "./components/img/";
 let dataAPI = reactive({ data: [] });
 let dataSearcher = reactive({ data: [] });
 let dataUserSelected = reactive({ data: [] });
+let dataUserFolderSelected = reactive({ data: [] });
 let dataRandomUser = reactive({ data: [] });
 const showModalMenu = ref(false);
 const srcUser = ref(iconUser);
@@ -17,10 +18,11 @@ onBeforeMount(async () => {
 
   //data [buscador] inicia con datos API
   //dataSearcher.data = dataAPI.data.filter((item) => item.index == "allen-p");
-  dataUserSelected.data = dataAPI.data.filter(
-    (item) => item.index == "allen-p"
-  );
-  dataSearcher.data = dataUserSelected.data;
+  const dataFiltered = dataAPI.data.filter((item) => item.index == "allen-p");
+
+  dataUserSelected.data = dataFiltered;
+  dataUserFolderSelected.data = dataFiltered;
+  dataSearcher.data = dataFiltered;
 
   // ---------------------------------
   //agrega nombre usuario a randomUser
@@ -47,6 +49,7 @@ onBeforeMount(async () => {
 provide("dataAPI", dataAPI);
 provide("dataSearcher", dataSearcher);
 provide("dataUserSelected", dataUserSelected);
+provide("dataUserFolderSelected", dataUserFolderSelected);
 provide("dataRandomUser", dataRandomUser);
 provide("showModalMenu", showModalMenu);
 provide("srcUser", srcUser);
