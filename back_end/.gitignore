@@ -1,9 +1,7 @@
 ### Custom ###
-data/*
 #!data/allen-p/
-!data/allen-p/inbox/9*
-!data/allen-p/deleted_items/100*
-!data/allen-p/sent_items/100*
+data/*
+!data/badeer-r/inbox/
 
 
 ### Go ###
