@@ -160,7 +160,7 @@ const getUser = (event) => {
   <!-- lista correo -->
   <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
     <ul
-      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between px-5 text-white hover:bg-darkSecondary"
+      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between py-2.5 px-5 text-white hover:bg-darkSecondary"
       v-for="item in dataSearcher?.data"
       @click="toggle(proxyToObject(item))"
     >
@@ -172,9 +172,7 @@ const getUser = (event) => {
           >
             {{ getFirstLetter(item?.from) }}
           </div>
-          <div
-            class="overflow-x-scroll overscroll-x-contain whitespace-nowrap py-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-          >
+          <div class="overflow-hidden whitespace-nowrap">
             <li>{{ item?.from }}</li>
             <li>{{ item?.subject }}</li>
           </div>
@@ -185,9 +183,7 @@ const getUser = (event) => {
         </div>
       </div>
 
-      <div
-        class="overflow-x-scroll overscroll-x-contain whitespace-nowrap py-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-      >
+      <div class="overflow-hidden whitespace-nowrap">
         {{ item?.body }}
       </div>
     </ul>
