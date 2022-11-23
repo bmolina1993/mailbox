@@ -6,6 +6,7 @@ import { iconUser } from "./components/img/";
 
 let dataAPI = reactive({ data: [] });
 let dataSearcher = reactive({ data: [] });
+let dataUserSelected = reactive({ data: [] });
 let dataRandomUser = reactive({ data: [] });
 const showModalMenu = ref(false);
 const srcUser = ref(iconUser);
@@ -14,49 +15,38 @@ onBeforeMount(async () => {
   dataRandomUser.data = await fetchRandomUser();
   dataAPI.data = await useFetch();
 
-  //data buscador inicia con set de datos API
-  dataSearcher.data = dataAPI.data;
+  //data [buscador] inicia con datos API
+  //dataSearcher.data = dataAPI.data.filter((item) => item.index == "allen-p");
+  dataUserSelected.data = dataAPI.data.filter(
+    (item) => item.index == "allen-p"
+  );
+  dataSearcher.data = dataUserSelected.data;
 
   // ---------------------------------
   //agrega nombre usuario a randomUser
   // ---------------------------------
   const auxUser = [];
-  //const auxFolder = [];
   dataAPI.data.forEach((item) => {
     auxUser.push(item.index);
-    /*
-    if (
-      item.folder == "inbox" ||
-      item.folder == "sent_items" ||
-      item.folder == "deleted_items" ||
-      item.folder == "all_documents"
-    ) {
-      auxFolder.push(item.folder);
-    }
-     */
   });
 
   //quita duplicados
   //se queda con lista de nombre usuarios de API mail
   const user = [...new Set(auxUser)];
-  //const folder = [...new Set(auxFolder)];
 
   //ordena datos
   user.sort((a, z) => a.localeCompare(z));
-  //folder.sort((a, z) => a.localeCompare(z));
 
   //agrega nombre a randomUser por indice [user]
   user.forEach((item, idx) => {
     dataRandomUser.data[idx].name = item;
   });
-
-  //console.log("user:", user);
-  //console.log("folder:", folder);
 });
 
 //datos globales
 provide("dataAPI", dataAPI);
 provide("dataSearcher", dataSearcher);
+provide("dataUserSelected", dataUserSelected);
 provide("dataRandomUser", dataRandomUser);
 provide("showModalMenu", showModalMenu);
 provide("srcUser", srcUser);

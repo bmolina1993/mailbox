@@ -5,6 +5,7 @@ import { proxyToObject } from "../utils/";
 
 const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
+const dataUserSelected = inject("dataUserSelected");
 const showModalMenu = inject("showModalMenu");
 const srcUser = inject("srcUser");
 
@@ -26,7 +27,8 @@ filtra data por los siguientes campos:
 const onChangeInput = (event) => {
   const value = event.target.value.toLowerCase();
 
-  const dataFiltered = [...dataAPI.data].filter(
+  //const dataFiltered = [...dataAPI.data].filter(
+  const dataFiltered = [...dataUserSelected.data].filter(
     (item) =>
       item.body.toLowerCase().includes(value) ||
       item.from.toLowerCase().includes(value) ||

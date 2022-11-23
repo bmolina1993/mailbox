@@ -11,6 +11,7 @@ import {
 } from "./img/";
 
 const dataAPI = inject("dataAPI");
+const dataUserSelected = inject("dataUserSelected");
 const dataSearcher = inject("dataSearcher");
 const showModalMenu = inject("showModalMenu");
 const dataRandomUser = inject("dataRandomUser");
@@ -58,6 +59,7 @@ const getUser = (event) => {
   );
 
   dataSearcher.data = proxyToObject(dataFiltered);
+  dataUserSelected.data = proxyToObject(dataFiltered);
 
   //activa seleccion de usuario
   isActiveUser.value = user;
