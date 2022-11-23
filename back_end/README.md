@@ -55,7 +55,7 @@ $ sudo docker create -p4080:4080 --name zinc -v /full/path/of/data:/data -e ZINC
 $ sudo docker start zinc
 ```
 ### 1.5 Interfaz de usuario 🌐
-[http://localhost:4080](http://localhost:4080)
+>[http://localhost:4080](http://localhost:4080)
 
 # 2. Proyecto GO
 Recorre cada carpeta de usuario para extraer toda la data del correo
@@ -68,10 +68,10 @@ $ go run main.go
 
 ### Resultado
 Con los siguientes datos podremos ver los registros almacenados:  
-**Herramienta**: Postman
-**Auth**: Basic Auto(credenciales previamente generada)
-**Endpoint**: http://localhost:4080/es/_search
-**Body**: {"search_type": "matchall", "from": 0, "size": 517424}
+**Herramienta**: Postman  
+**Auth**: Basic Auto(credenciales previamente generada)  
+**Endpoint**: http://localhost:4080/es/_search  
+**Body**: {"search_type": "matchall", "from": 0, "size": 517424}  
 
 ```json
 {
