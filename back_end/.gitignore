@@ -1,7 +1,6 @@
 ### Custom ###
-#!data/allen-p/
 data/*
-!data/badeer-r/inbox/
+!data/phanis-s/
 
 
 ### Go ###
