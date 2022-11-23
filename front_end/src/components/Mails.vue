@@ -3,12 +3,15 @@ import { inject, reactive, ref } from "vue";
 import { getDate, getFirstLetter, proxyToObject } from "../utils/";
 import { iconArrowLeft } from "./img/";
 
+const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
 const showModalMenu = inject("showModalMenu");
 const dataRandomUser = inject("dataRandomUser");
-const showModal = ref(false);
-//const showModalMenu = ref(false);
+const srcUser = inject("srcUser");
 
+const showModal = ref(false);
+const isActiveToList = ref(false);
+const isActiveUser = ref("");
 let dataModal = reactive({ data: {} });
 
 const closeModal = () => {
@@ -28,6 +31,7 @@ const toggle = (data) => {
   //quita scroll-y en body cuando se habre modal
   document.querySelector("body").style.overflowY = "hidden";
 };
+
 const toggleModalMenu = () => {
   //cierra modal
   showModalMenu.value = !showModalMenu.value;
@@ -36,8 +40,24 @@ const toggleModalMenu = () => {
   document.querySelector("body").style.overflowY = "";
 };
 
-const isActiveToList = ref(false);
 const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
+
+//seleccion de perfil en menu
+const getUser = (event) => {
+  const user = event.target.id;
+
+  const dataFiltered = [...dataAPI.data].filter((item) =>
+    item.index.includes(user)
+  );
+
+  dataSearcher.data = proxyToObject(dataFiltered);
+
+  //activa seleccion de usuario
+  isActiveUser.value = user;
+
+  //guarda ruta img de usuario para [searcher]
+  srcUser.value = event.target.src;
+};
 </script>
 
 <template>
@@ -111,17 +131,20 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
       v-show="showModalMenu"
       class="fixed top-0 flex h-screen w-screen text-white"
     >
-      <!-- menu lateral izq pl-5 -->
+      <!-- menu lateral izq -->
       <div class="h-full w-4/5 bg-darkPrimary pt-3">
-        <header class="pl-5 text-xl font-bold">Mailbox connect</header>
-        <!-- perfiles -->
+        <header class="pb-3 pl-5 text-xl font-bold">Mailbox connect</header>
+        <!-- usuarios -->
         <figure
           class="flex gap-x-2.5 overflow-y-hidden overflow-x-scroll overscroll-x-contain whitespace-nowrap border-y py-2.5 pl-5 pb-2.5 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
         >
           <img
             v-for="item in dataRandomUser.data"
             :src="item.picture"
-            class="w-12 rounded-full"
+            :id="item.name"
+            @click="getUser"
+            class="w-12 cursor-pointer rounded-full border-2 border-transparent"
+            :class="{ activeUser: item.name == isActiveUser }"
           />
         </figure>
       </div>
@@ -137,7 +160,6 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
   <!-- lista correo -->
   <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
     <ul
-      style="border: 1px solid"
       class="ulMain flex h-full w-full cursor-pointer flex-col justify-between px-5 text-white hover:bg-darkSecondary"
       v-for="item in dataSearcher?.data"
       @click="toggle(proxyToObject(item))"
@@ -195,5 +217,12 @@ const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
 /* activa lista [To] */
 .activeToList .listTo:nth-child(1n + 2) {
   display: block;
+}
+
+/* usuario seleccionado */
+.activeUser {
+  /* border: 2px solid #9ccc66; */
+  border: 2px solid #7986cc;
+  transform: scale(1.05);
 }
 </style>

@@ -1,11 +1,12 @@
 <script setup>
-import { inject } from "vue";
-import { iconMenu } from "./img/";
+import { inject, ref } from "vue";
+import { iconMenu, iconUser } from "./img/";
 import { proxyToObject } from "../utils/";
 
 const dataAPI = inject("dataAPI");
 const dataSearcher = inject("dataSearcher");
 const showModalMenu = inject("showModalMenu");
+const srcUser = inject("srcUser");
 
 const toggleModalMenu = () => {
   //abre modal
@@ -20,7 +21,6 @@ filtra data por los siguientes campos:
   . body
   . from
   . subject
-  . index = usuario
   . folder
 */
 const onChangeInput = (event) => {
@@ -31,7 +31,6 @@ const onChangeInput = (event) => {
       item.body.toLowerCase().includes(value) ||
       item.from.toLowerCase().includes(value) ||
       item.subject.toLowerCase().includes(value) ||
-      item.index.toLowerCase().includes(value) ||
       item.folder.toLowerCase().includes(value)
   );
 
@@ -54,7 +53,8 @@ const onChangeInput = (event) => {
         @input="onChangeInput"
       />
     </div>
-    <div class="h-6 w-6 shrink-0 rounded-full bg-gray-300"></div>
+    <!-- <div class="h-6 w-6 shrink-0 rounded-full bg-gray-300"></div> -->
+    <img :src="srcUser" class="h-6 w-6 rounded-full" />
   </div>
 </template>
 
