@@ -14,4 +14,14 @@
   .ulMain:nth-child(4n) .circleMail {
     @apply bg-fourth;
   }
+
+  /* usuario seleccionado */
+  .activeUser {
+    @apply scale-105 border-2 border-solid bg-fourth;
+  }
+
+  /* carpeta seleccionada */
+  .activeFolder {
+    @apply bg-darkSecondary;
+  }
 }

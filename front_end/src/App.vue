@@ -1,8 +1,8 @@
 <script setup>
 import { onBeforeMount, provide, reactive, ref } from "vue";
-import { Searcher, Mails } from "./components/";
-import { useFetch, fetchRandomUser } from "./utils/";
-import { iconUser } from "./components/img/";
+import { Searcher, Mails, FolderTree } from "./components";
+import { useFetch, fetchRandomUser, proxyToObject } from "./utils";
+import { iconUser } from "./components/img";
 
 // ---------
 // variables
@@ -16,6 +16,7 @@ let dataModal = reactive({ data: {} });
 const showModal = ref(false);
 const showModalMenu = ref(false);
 const srcUser = ref(iconUser);
+const isActiveUser = ref("");
 
 // ---------
 // funciones
@@ -52,6 +53,24 @@ onBeforeMount(async () => {
   });
 });
 
+//seleccion de perfil en menu
+const getUser = (event) => {
+  const user = event.target.id;
+
+  const dataFiltered = [...dataAPI.data].filter((item) =>
+    item.index.includes(user)
+  );
+
+  dataSearcher.data = proxyToObject(dataFiltered);
+  dataUserSelected.data = proxyToObject(dataFiltered);
+
+  //activa seleccion de usuario
+  isActiveUser.value = user;
+
+  //guarda ruta img de usuario para [searcher]
+  srcUser.value = event.target.src;
+};
+
 // --------------
 // datos globales
 // --------------
@@ -64,14 +83,55 @@ provide("dataRandomUser", dataRandomUser);
 provide("showModal", showModal);
 provide("showModalMenu", showModalMenu);
 provide("srcUser", srcUser);
+provide("isActiveUser", isActiveUser);
 </script>
 
 <template>
-  <header class="mt-3">
+  <header
+    class="mt-3 lg:mt-0 lg:flex lg:items-center lg:gap-x-2.5 lg:bg-darkPrimary lg:py-3"
+  >
+    <h1
+      class="hidden lg:block lg:w-1/6 lg:pr-2.5 lg:text-xl lg:font-bold lg:text-white"
+    >
+      Mailbox connect
+    </h1>
     <Searcher />
+
+    <!-- usuarios -->
+    <figure
+      class="hidden w-1/2 gap-x-2.5 overflow-y-hidden overflow-x-scroll overscroll-x-contain whitespace-nowrap py-2.5 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full lg:flex"
+    >
+      <img
+        v-for="item in dataRandomUser.data"
+        :src="item.picture"
+        :id="item.name"
+        @click="getUser"
+        class="scale-105 cursor-pointer rounded-full border-2 border-transparent"
+        :class="{ activeUser: item.name == isActiveUser }"
+      />
+    </figure>
   </header>
 
-  <main class="mt-3">
-    <Mails />
+  <main class="mt-3 lg:relative lg:mt-0 lg:min-h-screen">
+    <!-- para ingresar color en barra lateral izquierdo, ya que por por padding queda con bg madre -->
+    <div
+      id="leftBGMain"
+      class="hidden lg:absolute lg:block lg:h-full lg:w-5 lg:bg-darkPrimary"
+    ></div>
+    <!-- contenido principal, con division de bloques en porcentajes como el header -->
+    <section id="mainBG" class="lg:flex lg:min-h-screen lg:gap-x-2.5 lg:px-5">
+      <div class="hidden lg:block lg:w-1/6 lg:bg-darkPrimary lg:text-white">
+        <!-- nombre usuario seleccionado -->
+        <div class="flex gap-x-2.5 pt-3 pl-5 pb-2.5">
+          <img class="w-6" :src="iconUser" />
+          {{ isActiveUser }}
+        </div>
+
+        <FolderTree />
+      </div>
+      <Mails />
+    </section>
   </main>
 </template>
+
+<style scoped></style>

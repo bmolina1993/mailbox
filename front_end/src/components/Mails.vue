@@ -33,9 +33,11 @@ const toggle = (data) => {
   <ModalMenu />
 
   <!-- lista correo -->
-  <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
+  <div
+    class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2 lg:mt-5 lg:min-h-screen lg:w-1/3 lg:rounded-tl-lg lg:rounded-tr-lg lg:bg-darkPrimary lg:py-0"
+  >
     <ul
-      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between py-2.5 px-5 text-white hover:bg-darkSecondary"
+      class="ulMain flex h-full w-full cursor-pointer flex-col justify-between py-2.5 px-5 text-white hover:bg-darkSecondary lg:rounded-tl-lg lg:rounded-tr-lg"
       v-for="item in dataSearcher?.data"
       @click="toggle(proxyToObject(item))"
     >

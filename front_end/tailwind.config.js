@@ -4,8 +4,8 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      backgroundImage: {
-        // sanFrancisco: "url('/public/img/sanFrancisco.jpg')",
+      width: {
+        4.5: ["1.125rem"] /* 18px */,
       },
 
       colors: {
@@ -27,20 +27,11 @@ module.exports = {
         fourth: "#9CCC66",
         menu: "rgba(0, 0, 0, 0.5)",
       }),
-
-      /*
-      textColor: {
-        primary: "#CC2D4A",
-        secondary: "#8FA206",
-        tertiary: "#61AEC9",
-      },
-      */
     },
     fontFamily: {
       roboto: ["Roboto", "sans-serif", "Segoe UI", "Ubuntu"],
     },
   },
-  /**/
   plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
   variants: {
     scrollbar: ["rounded"],

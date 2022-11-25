@@ -1,15 +1,19 @@
 <script setup>
-import { inject, ref } from "vue";
-import { iconMenu } from "./img/";
+import { inject } from "vue";
+import { iconMenu, iconLupa } from "./img/";
 import { proxyToObject } from "../utils/";
 
-const dataAPI = inject("dataAPI");
+// ------------------------
+// injeccion datos globales
+// ------------------------
 const dataSearcher = inject("dataSearcher");
-const dataUserSelected = inject("dataUserSelected");
 const dataUserFolderSelected = inject("dataUserFolderSelected");
 const showModalMenu = inject("showModalMenu");
 const srcUser = inject("srcUser");
 
+// ---------
+// funciones
+// ---------
 const toggleModalMenu = () => {
   //abre modal
   showModalMenu.value = !showModalMenu.value;
@@ -40,10 +44,15 @@ const onChangeInput = (event) => {
 
 <template>
   <div
-    class="flex justify-between gap-x-1 rounded-full bg-darkSecondary px-2 py-1"
+    class="flex justify-between gap-x-1 rounded-full bg-darkSecondary px-2 py-1 lg:h-9 lg:w-1/3 lg:rounded-t lg:rounded-b lg:py-1.5"
   >
     <div class="flex w-full gap-x-1">
-      <img :src="iconMenu" @click="toggleModalMenu" class="cursor-pointer" />
+      <img
+        class="w-6 cursor-pointer lg:hidden"
+        :src="iconMenu"
+        @click="toggleModalMenu"
+      />
+      <img class="hidden lg:block lg:w-4.5" :src="iconLupa" />
       <input
         type="text"
         name="searchId"
@@ -53,8 +62,6 @@ const onChangeInput = (event) => {
         @input="onChangeInput"
       />
     </div>
-    <img :src="srcUser" class="h-6 w-6 rounded-full" />
+    <img :src="srcUser" class="h-6 w-6 rounded-full lg:hidden" />
   </div>
 </template>
-
-<style scoped></style>
