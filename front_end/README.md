@@ -37,5 +37,5 @@ Una vez ejecutado el comando anterior, se habilitara el siguiente puerto:
 
 
 ### Demo 🎬
-<img width="300" src="./demo/demo.mobile.gif"/>
-
+<img width="250" src="./demo/demo.mobile.gif"/>  
+<img width="600" src="./demo/demo.desktop.gif"/>
