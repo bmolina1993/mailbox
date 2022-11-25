@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeMount, provide, reactive, ref } from "vue";
-import { Searcher, Mails, FolderTree } from "./components";
+import { Searcher, Mails, FolderTree, DetailMailDesktop } from "./components";
 import { useFetch, fetchRandomUser, proxyToObject } from "./utils";
 import { iconUser } from "./components/img";
 
@@ -112,14 +112,15 @@ provide("isActiveUser", isActiveUser);
     </figure>
   </header>
 
-  <main class="mt-3 lg:relative lg:mt-0 lg:min-h-screen">
+  <main class="mt-3 lg:relative lg:mt-0">
     <!-- para ingresar color en barra lateral izquierdo, ya que por por padding queda con bg madre -->
     <div
       id="leftBGMain"
       class="hidden lg:absolute lg:block lg:h-full lg:w-5 lg:bg-darkPrimary"
     ></div>
     <!-- contenido principal, con division de bloques en porcentajes como el header -->
-    <section id="mainBG" class="lg:flex lg:min-h-screen lg:gap-x-2.5 lg:px-5">
+    <section id="mainBG" class="lg:flex lg:gap-x-2.5 lg:px-5">
+      <!-- barra lateral izquierdo, usuario y carpetas -->
       <div class="hidden lg:block lg:w-1/6 lg:bg-darkPrimary lg:text-white">
         <!-- nombre usuario seleccionado -->
         <div class="flex gap-x-2.5 pt-3 pl-5 pb-2.5">
@@ -129,9 +130,12 @@ provide("isActiveUser", isActiveUser);
 
         <FolderTree />
       </div>
+
+      <!-- lista de correos -->
       <Mails />
+
+      <!-- detalle correo -->
+      <DetailMailDesktop />
     </section>
   </main>
 </template>
-
-<style scoped></style>

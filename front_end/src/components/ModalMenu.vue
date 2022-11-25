@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref } from "vue";
+import { inject } from "vue";
 import { iconUser } from "./img";
 import { proxyToObject } from "../utils";
 import { FolderTree } from "../components";
@@ -11,7 +11,6 @@ const showModalMenu = inject("showModalMenu");
 const dataRandomUser = inject("dataRandomUser");
 const dataUserSelected = inject("dataUserSelected");
 const dataSearcher = inject("dataSearcher");
-const dataUserFolderSelected = inject("dataUserFolderSelected");
 const dataAPI = inject("dataAPI");
 const srcUser = inject("srcUser");
 const isActiveUser = inject("isActiveUser");
