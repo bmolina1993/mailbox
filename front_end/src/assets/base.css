@@ -4,10 +4,15 @@
 
 @layer base {
   body {
-    @apply bg-gray-900 font-roboto md:px-5;
+    @apply bg-gray-900 font-roboto;
   }
   /*excluye a [main] y [#modal] del padding*/
   body #app > :not(main, #modal, #modalMenu) {
     @apply px-5;
   }
 }
+
+/*
+@media (min-width: 768px)
+md:px-5
+*/

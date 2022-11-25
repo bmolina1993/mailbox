@@ -4,20 +4,27 @@ import { Searcher, Mails } from "./components/";
 import { useFetch, fetchRandomUser } from "./utils/";
 import { iconUser } from "./components/img/";
 
+// ---------
+// variables
+// ---------
 let dataAPI = reactive({ data: [] });
 let dataSearcher = reactive({ data: [] });
 let dataUserSelected = reactive({ data: [] });
 let dataUserFolderSelected = reactive({ data: [] });
 let dataRandomUser = reactive({ data: [] });
+let dataModal = reactive({ data: {} });
+const showModal = ref(false);
 const showModalMenu = ref(false);
 const srcUser = ref(iconUser);
 
+// ---------
+// funciones
+// ---------
 onBeforeMount(async () => {
   dataRandomUser.data = await fetchRandomUser();
   dataAPI.data = await useFetch();
 
   //data [buscador] inicia con datos API
-  //dataSearcher.data = dataAPI.data.filter((item) => item.index == "allen-p");
   const dataFiltered = dataAPI.data.filter((item) => item.index == "allen-p");
 
   dataUserSelected.data = dataFiltered;
@@ -45,12 +52,16 @@ onBeforeMount(async () => {
   });
 });
 
-//datos globales
+// --------------
+// datos globales
+// --------------
 provide("dataAPI", dataAPI);
 provide("dataSearcher", dataSearcher);
 provide("dataUserSelected", dataUserSelected);
 provide("dataUserFolderSelected", dataUserFolderSelected);
+provide("dataModal", dataModal);
 provide("dataRandomUser", dataRandomUser);
+provide("showModal", showModal);
 provide("showModalMenu", showModalMenu);
 provide("srcUser", srcUser);
 </script>
@@ -64,5 +75,3 @@ provide("srcUser", srcUser);
     <Mails />
   </main>
 </template>
-
-<style scoped></style>

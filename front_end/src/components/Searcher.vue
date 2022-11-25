@@ -26,10 +26,7 @@ filtra data por los siguientes campos:
 */
 const onChangeInput = (event) => {
   const value = event.target.value.toLowerCase();
-  //let dataFiltered = [];
-  //const dataFiltered = [...dataAPI.data].filter(
 
-  //const dataFiltered = [...dataUserSelected.data].filter(
   const dataFiltered = [...dataUserFolderSelected.data].filter(
     (item) =>
       item.body.toLowerCase().includes(value) ||
@@ -38,25 +35,6 @@ const onChangeInput = (event) => {
   );
 
   dataSearcher.data = proxyToObject(dataFiltered);
-  /*
-  if (value) {
-    dataFiltered = [...dataSearcher.data].filter(
-      (item) =>
-        item.body.toLowerCase().includes(value) ||
-        item.from.toLowerCase().includes(value) ||
-        item.subject.toLowerCase().includes(value)
-    );
-    dataSearcher.data = proxyToObject(dataFiltered);
-  } else {
-    dataFiltered = [...dataUserSelected.data].filter(
-      (item) =>
-        item.body.toLowerCase().includes(value) ||
-        item.from.toLowerCase().includes(value) ||
-        item.subject.toLowerCase().includes(value)
-    );
-    dataSearcher.data = proxyToObject(dataFiltered);
-  }
-  */
 };
 </script>
 

@@ -1,37 +1,18 @@
 <script setup>
-import { inject, reactive, ref } from "vue";
-import { getDate, getFirstLetter, proxyToObject } from "../utils/";
-import {
-  iconArrowLeft,
-  iconUser,
-  iconRecibidos,
-  iconEnviados,
-  iconPapelera,
-  iconTodos,
-} from "./img/";
+import { inject } from "vue";
+import { DetailMail, ModalMenu } from "../components";
+import { getDate, getFirstLetter, proxyToObject } from "../utils";
 
-const dataAPI = inject("dataAPI");
-const dataUserSelected = inject("dataUserSelected");
-const dataUserFolderSelected = inject("dataUserFolderSelected");
+// ------------------------
+// injeccion datos globales
+// ------------------------
 const dataSearcher = inject("dataSearcher");
-const showModalMenu = inject("showModalMenu");
-const dataRandomUser = inject("dataRandomUser");
-const srcUser = inject("srcUser");
+const showModal = inject("showModal");
+const dataModal = inject("dataModal");
 
-const showModal = ref(false);
-const isActiveToList = ref(false);
-const isActiveUser = ref("");
-const isActiveFolder = ref("");
-let dataModal = reactive({ data: {} });
-
-const closeModal = () => {
-  //quita scroll-y en body cuando se habre modal
-  document.querySelector("body").style.overflowY = "";
-
-  //cierra modal
-  showModal.value = !showModal.value;
-};
-
+// ---------
+// funciones
+// ---------
 const toggle = (data) => {
   //save data modal
   dataModal.data = data;
@@ -39,195 +20,17 @@ const toggle = (data) => {
   showModal.value = !showModal.value;
 
   //quita scroll-y en body cuando se habre modal
+  //para no tomar scroll de lista correo
   document.querySelector("body").style.overflowY = "hidden";
-};
-
-const toggleModalMenu = () => {
-  //cierra modal
-  showModalMenu.value = !showModalMenu.value;
-
-  //quita scroll-y en body cuando se habre modal
-  document.querySelector("body").style.overflowY = "";
-};
-
-const toggleToList = () => (isActiveToList.value = !isActiveToList.value);
-
-//seleccion de perfil en menu
-const getUser = (event) => {
-  const user = event.target.id;
-
-  const dataFiltered = [...dataAPI.data].filter((item) =>
-    item.index.includes(user)
-  );
-
-  dataSearcher.data = proxyToObject(dataFiltered);
-  dataUserSelected.data = proxyToObject(dataFiltered);
-
-  //activa seleccion de usuario
-  isActiveUser.value = user;
-
-  //guarda ruta img de usuario para [searcher]
-  srcUser.value = event.target.src;
-};
-
-//filtra por carpeta seleccionada
-const filterByFolder = (event) => {
-  const folder = event.target.id;
-
-  //activa seleccion de carpeta
-  isActiveFolder.value = folder;
-
-  const dataFiltered = [...dataUserSelected.data].filter((item) =>
-    item.folder.includes(folder)
-  );
-
-  dataSearcher.data = proxyToObject(dataFiltered);
-  dataUserFolderSelected.data = proxyToObject(dataFiltered);
 };
 </script>
 
 <template>
-  <!-- modal detalle correo -->
-  <teleport to="#app">
-    <section
-      id="modal"
-      v-show="showModal"
-      class="fixed top-0 flex h-screen w-screen flex-col bg-gray-900 text-white"
-    >
-      <header class="flex gap-x-1 bg-darkSecondary py-2 px-5">
-        <img class="cursor-pointer" @click="closeModal" :src="iconArrowLeft" />
-        <p
-          class="overflow-x-scroll overscroll-x-contain whitespace-nowrap py-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-        >
-          {{ dataModal.data.subject }}
-        </p>
-      </header>
-      <main
-        class="mt-3 flex h-full flex-col gap-y-3 overflow-y-scroll px-5 pb-10"
-      >
-        <!-- info mail -->
-        <div>
-          <div class="flex gap-x-2">
-            <!-- circulo de correo -->
-            <div
-              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tertiary text-xl text-black"
-            >
-              {{ getFirstLetter(dataModal.data.from) }}
-            </div>
-
-            <div class="w-full">
-              <p>{{ getDate(dataModal.data.date, "long") }}</p>
-              <p
-                class="overflow-x-scroll overscroll-x-contain whitespace-nowrap py-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-              >
-                {{ dataModal.data.from }}
-              </p>
-            </div>
-          </div>
-          <!--
-            se agrega padding-left(pl-14) contemplando
-            width(w-12) de circulo correo y gap (gap-x-2) del padre
-          -->
-          <ul
-            @click="toggleToList"
-            class="pl-14"
-            :class="{ activeToList: isActiveToList }"
-          >
-            <li
-              class="listTo overflow-x-scroll overscroll-x-contain whitespace-nowrap pb-1 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-              v-for="itemTo in dataModal.data.to"
-            >
-              {{ itemTo }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- contenido correo -->
-        <p class="whitespace-pre-line break-words">
-          {{ dataModal.data.body }}
-        </p>
-      </main>
-    </section>
-  </teleport>
+  <!-- Detalle correo -->
+  <DetailMail />
 
   <!-- modal menu latereal -->
-  <teleport to="#app">
-    <aside
-      id="modalMenu"
-      v-show="showModalMenu"
-      class="fixed top-0 flex h-screen w-screen text-white"
-    >
-      <!-- menu lateral izq -->
-      <div class="h-full w-4/5 bg-darkPrimary pt-3">
-        <header class="pb-3 pl-5 text-xl font-bold">Mailbox connect</header>
-        <!-- usuarios -->
-        <figure
-          class="flex gap-x-2.5 overflow-y-hidden overflow-x-scroll overscroll-x-contain whitespace-nowrap border-y py-2.5 pl-5 pb-2.5 scrollbar-thin scrollbar-track-darkSecondary scrollbar-thumb-darkPrimary scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
-        >
-          <img
-            v-for="item in dataRandomUser.data"
-            :src="item.picture"
-            :id="item.name"
-            @click="getUser"
-            class="w-12 cursor-pointer rounded-full border-2 border-transparent"
-            :class="{ activeUser: item.name == isActiveUser }"
-          />
-        </figure>
-
-        <!-- nombre usuario seleccionado -->
-        <div class="flex gap-x-2.5 pt-3 pl-5 pb-2.5">
-          <img :src="isActiveUser && iconUser" />
-          {{ isActiveUser }}
-        </div>
-
-        <!-- lista de carpetas -->
-        <section class="px-5">
-          <div
-            @click="filterByFolder"
-            id="inbox"
-            :class="{ activeFolder: isActiveFolder == 'inbox' }"
-            class="min- flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
-          >
-            <img class="ml-2.5 w-6" :src="iconRecibidos" />
-            Recibidos
-          </div>
-          <div
-            @click="filterByFolder"
-            id="sent_items"
-            :class="{ activeFolder: isActiveFolder == 'sent_items' }"
-            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
-          >
-            <img class="ml-2.5 w-6" :src="iconEnviados" />
-            Enviados
-          </div>
-          <div
-            @click="filterByFolder"
-            id="deleted_items"
-            :class="{ activeFolder: isActiveFolder == 'deleted_items' }"
-            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
-          >
-            <img class="ml-2.5 w-6" :src="iconPapelera" />
-            Papelera
-          </div>
-          <div
-            @click="filterByFolder"
-            id=""
-            :class="{ activeFolder: isActiveFolder == '' }"
-            class="flex h-10 cursor-pointer items-center gap-x-2.5 rounded hover:bg-darkSecondary"
-          >
-            <img class="ml-2.5 w-6" :src="iconTodos" />
-            Todos
-          </div>
-        </section>
-      </div>
-
-      <!-- menu lateral derecho -->
-      <div
-        @click="toggleModalMenu"
-        class="h-full w-1/5 cursor-pointer bg-menu"
-      ></div>
-    </aside>
-  </teleport>
+  <ModalMenu />
 
   <!-- lista correo -->
   <div class="flex h-full w-full flex-col gap-y-px gap-x-2.5 py-2">
@@ -261,40 +64,3 @@ const filterByFolder = (event) => {
     </ul>
   </div>
 </template>
-
-<style scoped>
-/* agrega [To] al 1er item de lista */
-.listTo:nth-child(1)::before {
-  content: "To: ";
-}
-.listTo:nth-child(1n + 2)::before {
-  content: "To: ";
-  color: transparent;
-}
-
-/* pointer al 1er [To] */
-.listTo:nth-child(1) {
-  cursor: pointer;
-}
-
-/* a partir del 2do [To] oculta dato  */
-.listTo:nth-child(1n + 2) {
-  display: none;
-}
-
-/* activa lista [To] */
-.activeToList .listTo:nth-child(1n + 2) {
-  display: block;
-}
-
-/* usuario seleccionado */
-.activeUser {
-  border: 2px solid #9ccc66;
-  transform: scale(1.05);
-}
-
-/* carpeta seleccionada */
-.activeFolder {
-  background-color: #293548;
-}
-</style>
