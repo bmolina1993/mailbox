@@ -3,11 +3,12 @@ package services
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
+	"log"
 	"net/http"
+	"os"
 
 	entity "github.com/bmolina1993/mailbox/src/entities"
+	"github.com/joho/godotenv"
 )
 
 func PostApiBulkData(data entity.QueryMail) error {
@@ -25,7 +26,14 @@ func PostApiBulkData(data entity.QueryMail) error {
 		return err
 	}
 
-	req.SetBasicAuth("admin", "Complexpass#123")
+	errEnv := godotenv.Load()
+	if errEnv != nil {
+		log.Fatal("Error cargando archivo .env")
+	}
+	user := os.Getenv("ZINC_USER")
+	password := os.Getenv("ZINC_PASS")
+
+	req.SetBasicAuth(user, password)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
 
@@ -36,14 +44,17 @@ func PostApiBulkData(data entity.QueryMail) error {
 
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
+	//en caso de querer ver LOG de respuesta post api [opcional]
+	/*
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
 
-	fmt.Println("\n--> LOG POST API <--")
-	fmt.Println("StatusCode:", resp.StatusCode)
-	fmt.Println("body:", string(body))
+		fmt.Println("\n--> LOG POST API <--")
+		fmt.Println("StatusCode:", resp.StatusCode)
+		fmt.Println("body:", string(body))
+	*/
 
 	return nil
 }

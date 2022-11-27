@@ -46,9 +46,10 @@ $ sudo docker tag public.ecr.aws/zinclabs/zinc:0.3.3 zinc:0.3.3
 ```
 ### 1.3 Creación de contenedor
 Creado con las siguientes caracteristicas:  
-**Nombre:** zinc | **Puerto:** 4080 | **Usuario:** admin | **Contraseña:** Complexpass#123
+**full_path_zinc:** Ingresar aqui ruta para almacenar datos zinc  
+**Nombre:** zinc | **Puerto:** 4080 | **Usuario:** admin | **Contraseña:** Complexpass@123
 ```bash
-$ sudo docker create -p4080:4080 --name zinc -v /full/path/of/data:/data -e ZINC_DATA_PATH="/data" -e ZINC_FIRST_ADMIN_USER=admin -e ZINC_FIRST_ADMIN_PASSWORD=Complexpass#123 zinc:0.3.3
+$ sudo docker create -p4080:4080 --name zinc -v [/full_path_zinc] -e ZINC_DATA_PATH="/data" -e ZINC_FIRST_ADMIN_USER=admin -e ZINC_FIRST_ADMIN_PASSWORD=Complexpass@123 zinc:0.3.3
 ```
 ### 1.4 Inicia contenedor
 ```bash

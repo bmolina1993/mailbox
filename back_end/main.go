@@ -14,6 +14,7 @@ func main() {
 
 	//recorre cada carpeta de usuario
 	//y sus sub-carpetas para hacer post api de data
+	fmt.Println("--> Carga de datos en progreso... <--")
 	err := service.ExtractAllFolders(pathFile, dirFile)
 	if err != nil {
 		fmt.Println("ExtractAllFolders:", err)
