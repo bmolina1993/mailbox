@@ -3,9 +3,12 @@ package services
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
+	"os"
 
 	entity "github.com/bmolina1993/mailbox/src/entities"
+	"github.com/joho/godotenv"
 )
 
 func FetchData() (string, error) {
@@ -31,7 +34,14 @@ func FetchData() (string, error) {
 		return "", err
 	}
 
-	req.SetBasicAuth("admin", "Complexpass#123")
+	errEnv := godotenv.Load()
+	if errEnv != nil {
+		log.Fatal("Error cargando archivo .env")
+	}
+	user := os.Getenv("ZINC_USER")
+	password := os.Getenv("ZINC_PASS")
+
+	req.SetBasicAuth(user, password)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
 
