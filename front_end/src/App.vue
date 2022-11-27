@@ -17,6 +17,7 @@ const showModal = ref(false);
 const showModalMenu = ref(false);
 const srcUser = ref(iconUser);
 const isActiveUser = ref("");
+const isActiveFolder = ref("");
 
 // ---------
 // funciones
@@ -26,11 +27,18 @@ onBeforeMount(async () => {
   dataAPI.data = await useFetch();
 
   //data [buscador] inicia con datos API
-  const dataFiltered = dataAPI.data.filter((item) => item.index == "allen-p");
+  const userFiltered = dataAPI.data.sort((a, z) =>
+    a.index.localeCompare(z.index)
+  )[0].index;
+
+  const dataFiltered = dataAPI.data.filter(
+    (item) => item.index == userFiltered
+  );
 
   dataUserSelected.data = dataFiltered;
   dataUserFolderSelected.data = dataFiltered;
   dataSearcher.data = dataFiltered;
+  isActiveUser.value = dataFiltered[0].index;
 
   // ---------------------------------
   //agrega nombre usuario a randomUser
@@ -69,6 +77,10 @@ const getUser = (event) => {
 
   //guarda ruta img de usuario para [searcher]
   srcUser.value = event.target.src;
+
+  //por cada cambio de usuario,
+  //deja la carpeta seleccionada [Todos]
+  isActiveFolder.value = "";
 };
 
 // --------------
@@ -84,6 +96,7 @@ provide("showModal", showModal);
 provide("showModalMenu", showModalMenu);
 provide("srcUser", srcUser);
 provide("isActiveUser", isActiveUser);
+provide("isActiveFolder", isActiveFolder);
 </script>
 
 <template>

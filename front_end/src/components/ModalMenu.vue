@@ -14,6 +14,7 @@ const dataSearcher = inject("dataSearcher");
 const dataAPI = inject("dataAPI");
 const srcUser = inject("srcUser");
 const isActiveUser = inject("isActiveUser");
+const isActiveFolder = inject("isActiveFolder");
 
 // ---------
 // funciones
@@ -43,6 +44,10 @@ const getUser = (event) => {
 
   //guarda ruta img de usuario para [searcher]
   srcUser.value = event.target.src;
+
+  //por cada cambio de usuario,
+  //deja la carpeta seleccionada [Todos]
+  isActiveFolder.value = "";
 };
 </script>
 

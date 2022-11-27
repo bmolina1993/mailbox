@@ -9,11 +9,7 @@ import { proxyToObject } from "../utils";
 const dataUserSelected = inject("dataUserSelected");
 const dataSearcher = inject("dataSearcher");
 const dataUserFolderSelected = inject("dataUserFolderSelected");
-
-// ---------
-// variables
-// ---------
-const isActiveFolder = ref("");
+const isActiveFolder = inject("isActiveFolder");
 
 // ---------
 // funciones
