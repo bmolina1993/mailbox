@@ -50,6 +50,9 @@ Para más información: 👉 [`README`](server/README.md)
 Prototipo desarrollado bajo diseño atomico con figma y sitio web en Vue 3:  
 Para más información: 👉 [`README`](front_end/README.md)
 
+## Link proyecto 🌐
+👉 [`URL`](https://bmolina1993.github.io/mailbox)
+
 ### Demo 🎬
 <img width="250" src="front_end/demo/demo.mobile.gif"/>
 <img width="600" src="front_end/demo/demo.desktop.gif"/>
