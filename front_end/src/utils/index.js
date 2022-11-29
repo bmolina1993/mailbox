@@ -1,10 +1,11 @@
-import auxData from "../../public/data.maildir.json";
+//[deploy]
+//se deja import usado para deploy en GitHub
+//con datos exportados por BackEnd
+//import auxData from "../../public/data.maildir.json";
 
 export const useFetch = async () => {
-  /*
   const response = await fetch("http://localhost:8080/");
   const auxData = await response.json();
-  */
 
   //formateo a estructura deseada
   const data = auxData.map((item) => {
