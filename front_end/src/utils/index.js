@@ -1,6 +1,10 @@
+import auxData from "../../public/data.maildir.json";
+
 export const useFetch = async () => {
+  /*
   const response = await fetch("http://localhost:8080/");
   const auxData = await response.json();
+  */
 
   //formateo a estructura deseada
   const data = auxData.map((item) => {
